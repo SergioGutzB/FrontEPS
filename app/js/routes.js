@@ -3,17 +3,27 @@ angular
   .config(appConfig);
 
 function appConfig($routeProvider, $locationProvider) {
-  $routeProvider
-    .when('/', {
-      templateUrl: '/index.html',
-      controller: 'Index',
-      controller_as: "vm"
-    })
-    .otherwise({
-      redirectTo: '/'
-    });
+  $routeProvider.when('/', {
+    templateUrl: '../../views/dashboard.html',
+    controller: 'DashBoard',
+    controllerAs: "vm"
+  })
 
-  $routeProvider.otherwise({ redirectTo: '/' });
+  .when('/pacientes', {
+    templateUrl: '../../views/pacientes.html',
+    controller: 'Pacientes',
+    controllerAs: "pa"
+  })
+
+  .when('/citas_medicas', {
+    templateUrl: '../../views/citas.html',
+    controller: 'Citas',
+    controllerAs: "ci"
+  })
+
+  .otherwise({
+    redirectTo: '/'
+  });
 
   $locationProvider.html5Mode({
     enabled: true,

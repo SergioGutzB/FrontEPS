@@ -1,0 +1,24 @@
+<div class="container">
+  <div layout="column" class="pasientes">
+    <div flex class="titulo">
+      <h1>Pacientes</h1>
+    </div>
+
+    <div flex class="listado">
+      <input ng-model='pa.filterValue' /><button ng-click='pa.filter()'>Filter</button>
+      <md-button type="button" class="btn btn-success" ng-click="pa.toggleRowSelection()">Toggle rowSelection</md-button>
+      <strong>rowSelection:</strong> <span ng-bind="pa.gridApi.grid.options.enableRowSelection"></span>
+      <div id="grid1" ui-grid="pa.gridOptions" ui-grid-selection ui-grid-pagination ui-grid-cellNav class="grid"></div>
+      <p>Current page: {{ pa.gridApi.pagination.getPage() }} of {{ pa.gridApi.pagination.getTotalPages() }}</p>
+      <md-button type="button" class="btn btn-success" ng-click="pa.gridApi.pagination.previousPage()">
+        previous page
+      </md-button>
+      <md-button type="button" class="btn btn-success" ng-click="pa.gridApi.pagination. nextPage()">
+        next page
+      </md-button>
+      <md-button type="button" class="btn btn-success" ng-click="pa.gridApi.pagination.seek(3)">
+        go to page 3
+      </md-button>
+    </div>
+  </div>
+</div>

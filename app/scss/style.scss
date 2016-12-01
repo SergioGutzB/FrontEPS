@@ -1,3 +1,64 @@
+@import '../../bower_components/font-awesome-sass/assets/stylesheets/_font-awesome.scss';
+@import '../../bower_components/font-awesome-sass/assets/stylesheets/_font-awesome-sprockets.scss';
+@import 'source/_variables.scss';
+@import 'source/_mixins.scss';
 body {
-  background-color: lightgray;
+  .md-toolbar-tools {
+    padding: 0px;
+  }
+  md-toolbar.md-eps-dark-theme:not(.md-menu-toolbar)._md-toolbar-transitions {
+    background-color: $grey-900;
+    .user {
+      height: 100%;
+      background-color: $l-green-400;
+      padding: 18px 10px;
+      color: #fff;
+      text-align: center;
+    }
+  }
+  .content-layout {
+    height: calc(100vh - 64px);
+    .barra-lateral {
+      background-color: $grey-900;
+      height: 100%;
+      .perfil {}
+      .menu {
+        ul {
+          margin: 0px;
+          padding: 0px;
+          width: 100%;
+          li {
+            i {
+              padding-right: 10px;
+            }
+            background-color: $tranparent;
+            padding: 15px 10px;
+            color: #fff;
+            cursor: pointer;
+            @include transition-property(background-color, fill, color);
+            @include transition-duration(.6s);
+            @include transition-timing-function(cubic-bezier(.35, 0, .25, 1));
+          }
+          li:hover {
+            background-color: $l-green-400;
+            padding: 15px 10px;
+            color: #fff;
+            @include transition-property(background-color, fill, color);
+            @include transition-duration(.6s);
+            @include transition-timing-function(cubic-bezier(.35, 0, .25, 1));
+          }
+        }
+      }
+    }
+  }
+  #initial-container {
+    background-color: $grey-50;
+    margin: 0px;
+    padding: 0px;
+    .container {
+      background-color: #fff;
+      margin: 20px;
+      padding: 10px 20px;
+    }
+  }
 }

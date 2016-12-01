@@ -27,6 +27,7 @@ gulp.task('concatControllers', function() {
 gulp.task('sass', function() {
   sass('app/scss/*.scss')
     .on('error', sass.logError)
+    .pipe(concat('style.css'))
     .pipe(uglifycss({
       "maxLineLen": 80,
       "uglyComments": true
