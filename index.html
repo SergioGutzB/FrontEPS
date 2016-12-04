@@ -7,7 +7,6 @@
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
   <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css">
-
   <link href="app/css/style.css" rel="stylesheet">
 
 </head>
@@ -15,16 +14,12 @@
 <body ng-app="Eps">
   <div>
 
-    <md-toolbar md-theme="eps-dark" md-whiteframe="1">
+    <md-toolbar md-theme="eps-green">
       <div class="md-toolbar-tools" layout-sm="column" layout-gt-sm="row">
-        <div class="user" flex="20">
-          <h1>Usuario</h1>
-        </div>
+        <h1>Usuario</h1>
         <span flex></span>
         <h3>Fecha</h3>
-        <div>
-          <md-button class="md-raised md-warn" aria-label="Salir">Salir</md-button>
-        </div>
+        <a href="#" class="sing-out"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a>
       </div>
     </md-toolbar>
 
@@ -34,22 +29,22 @@
         </div>
         <div class="menu">
           <ul>
-            <li md-whiteframe="1" ng-click="vm.go('/')"><i class="fa fa-home fa-2x" aria-hidden="true"></i>Inicio</li>
-            <li md-whiteframe="1" ng-click="vm.go('/pacientes')"><i class="fa fa-user fa-2x" aria-hidden="true"></i>Pacientes</li>
-            <li md-whiteframe="1" ng-click="vm.go('/doctores')"><i class="fa fa-user-md fa-2x" aria-hidden="true"></i>Doctores</li>
-            <li md-whiteframe="1" ng-click="vm.go('/consultas')"><i class="fa fa-tasks fa-2x" aria-hidden="true"></i>Consultas Hoy</li>
-            <li md-whiteframe="1" ng-click="vm.go('/citas_medicas')"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i>Citas Médicas</li>
-            <li md-whiteframe="1" ng-click="vm.go('/historia')"><i class="fa fa-address-card fa-2x" aria-hidden="true"></i>História Clinica</li>
-            <li md-whiteframe="1" ng-click="vm.go('/pacientes')"><i class="fa fa-cog fa-2x" aria-hidden="true"></i>Administración</li>
+            <li ng-class="{active: currentPage=='inicio'}" ng-click="vm.go('')"><i class="fa fa-home fa-2x" aria-hidden="true"></i>Inicio</li>
+            <li ng-class="{active: currentPage=='pacientes'}" ng-click="vm.go('pacientes')"><i class="fa fa-users fa-2x" aria-hidden="true"></i>Pacientes</li>
+            <li ng-class="{active: currentPage=='doctores'}" ng-click="vm.go('doctores')"><i class="fa fa-user-md fa-2x" aria-hidden="true"></i>Profesionales</li>
+            <li ng-click="vm.go('consultas')"><i class="fa fa-tasks fa-2x" aria-hidden="true"></i>Consultas Hoy</li>
+            <li ng-class="{active: currentPage=='citas_medicas'}" ng-click="vm.go('citas_medicas')"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i>Citas Médicas</li>
+            <li ng-click="vm.go('historia')"><i class="fa fa-address-card fa-2x" aria-hidden="true"></i>História Clinica</li>
+            <li ng-click="vm.go('pacientes')"><i class="fa fa-cog fa-2x" aria-hidden="true"></i>Administración</li>
           </ul>
         </div>
       </div>
-      <div flex="80" class="contenido">
-        <div id="initial-container">
-          <div ng-view>
-          </div>
+
+      <div flex="80" layout="row" class="container">
+        <div flex ng-view layout="row">
         </div>
       </div>
+
     </div>
 
   </div>
@@ -70,6 +65,8 @@
   <script src="app/js/app.js"></script>
   <script src="app/js/routes.js"></script>
   <script src="app/js/build/controllers.js"></script>
+  <script src="app/js/build/services.js"></script>
+
 </body>
 
 </html>

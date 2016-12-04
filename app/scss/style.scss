@@ -3,23 +3,23 @@
 @import 'source/_variables.scss';
 @import 'source/_mixins.scss';
 body {
+  color: $grey-800;
   .md-toolbar-tools {
-    padding: 0px;
+    padding: 20px;
   }
-  md-toolbar.md-eps-dark-theme:not(.md-menu-toolbar)._md-toolbar-transitions {
-    background-color: $grey-900;
-    .user {
-      height: 100%;
-      background-color: $l-green-400;
-      padding: 18px 10px;
+  md-toolbar {
+    h1,
+    h2,
+    h3,
+    h4,
+    i {
       color: #fff;
-      text-align: center;
     }
   }
   .content-layout {
     height: calc(100vh - 64px);
     .barra-lateral {
-      background-color: $grey-900;
+      background-color: $grey-50;
       height: 100%;
       .perfil {}
       .menu {
@@ -31,34 +31,54 @@ body {
             i {
               padding-right: 10px;
             }
-            background-color: $tranparent;
-            padding: 15px 10px;
-            color: #fff;
+            background-color: $grey-50;
+            padding: 15px 20px;
+            color: $grey-800;
             cursor: pointer;
-            @include transition-property(background-color, fill, color);
+            @include transition-property(background-color, fill);
             @include transition-duration(.6s);
             @include transition-timing-function(cubic-bezier(.35, 0, .25, 1));
           }
           li:hover {
-            background-color: $l-green-400;
-            padding: 15px 10px;
-            color: #fff;
-            @include transition-property(background-color, fill, color);
+            background-color: $grey-200;
+            @include transition-property(background-color, fill);
             @include transition-duration(.6s);
             @include transition-timing-function(cubic-bezier(.35, 0, .25, 1));
+          }
+          li:focus {
+            outline: 0px;
           }
         }
       }
     }
   }
-  #initial-container {
-    background-color: $grey-50;
+  .container {
+    background-color: $grey-100;
     margin: 0px;
     padding: 0px;
-    .container {
+    .contenido {
       background-color: #fff;
       margin: 20px;
       padding: 10px 20px;
+      width: 100%;
+      .titulo {
+        margin-bottom: 20px;
+      }
     }
+  }
+  .sing-out {
+    padding-left: 20px;
+  }
+  .active {
+    background-color: $grey-200 !important;
+  }
+  .fa-2x {
+    font-size: 22px;
+  }
+  .right {
+    float: right;
+  }
+  .text-right {
+    text-align: right;
   }
 }

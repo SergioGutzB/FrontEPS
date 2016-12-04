@@ -1,0 +1,130 @@
+<div class="contenido">
+  <div layout="column" class="pasientes">
+    <div flex class="titulo" layout="row">
+      <i class="fa {{padd.icon}} fa-3x" aria-hidden="true"></i> </i>
+      <h1>{{padd.title}}</h1>
+    </div>
+    <hr>
+    <div>
+      <form name="pacienteAdd" md-theme="eps-green">
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Primer nombre</label>
+            <input ng-model="padd.paciente.primerNombre" name="primerNombre" required>
+            <div ng-messages="pacienteAdd.primerNombre.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Segundo nombre</label>
+            <input ng-model="padd.paciente.segundoNombre" name="segundoNombre" required>
+            <div ng-messages="pacienteAdd.segundoNombre.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Primer apellido</label>
+            <input ng-model="padd.paciente.primerApellido" name="primerApellido" required>
+            <div ng-messages="pacienteAdd.primerApellido.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Segundo apellido</label>
+            <input ng-model="padd.paciente.segundoApellido" name="segundoApellido" required>
+            <div ng-messages="pacienteAdd.segundoApellido.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Documento</label>
+            <input ng-model="padd.paciente.documento" required>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Cumpleaños</label>
+            <md-datepicker ng-model="padd.paciente.fechaNacimiento" value="{{padd.paciente.fechaNacimiento}}" required></md-datepicker>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Estado civil</label>
+            <md-select name="estadoCivil" ng-model="padd.paciente.estadoCivil" required>
+              <md-option value="casado">Casado/a</md-option>
+              <md-option value="comprometido">Comprometido/a</md-option>
+              <md-option value="soltero">Soltero/a</md-option>
+              <md-option value="divorciado">Divorciado/a</md-option>
+              <md-option value="viudo">Viudo/a</md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Sexo</label>
+            <md-select name="sexo" ng-model="padd.paciente.sexo" required>
+              <md-option value="F">Femenino</md-option>
+              <md-option value="M">Masculino</md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Lugar de Nacimeinto</label>
+            <input ng-model="padd.paciente.lugarNacimiento" required>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Ciudad</label>
+            <input ng-model="padd.paciente.ciudad" required>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Dirección</label>
+            <input ng-model="padd.paciente.direccion" required>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Teléfono</label>
+            <input ng-model="padd.paciente.telefono" required>
+          </md-input-container>
+
+
+        </div>
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Celular</label>
+            <input ng-model="padd.paciente.celular" required>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Grado de Educación</label>
+            <md-select name="educacion" ng-model="padd.paciente.educacion" required>
+              <md-option value="ePrimaria">Básica primaria</md-option>
+              <md-option value="eSecundaria">Básica secundaria</md-option>
+              <md-option value="eUniversitaria">Universitario</md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Ocupación</label>
+            <input ng-model="padd.paciente.ocupacion" required>
+          </md-input-container>
+        </div>
+
+        <div layout-gt-xs="row">
+          <md-button type="submit" class="md-primary md-raised md-hue-2">Guardar</md-button>
+        </div>
+
+
+
+      </form>
+    </div>
+  </div>
+</div>

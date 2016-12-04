@@ -1,12 +1,34 @@
 var eps = angular.module('Eps');
 eps.controller('Pacientes', pacientesController);
-pacientesController.$inject = ['$scope', '$interval', 'uiGridConstants'];
+pacientesController.$inject = ['$scope', '$interval', 'uiGridConstants', '$location', '$mdDialog', 'sData'];
 
-function pacientesController($scope, $interval, uiGridConstants) {
+function pacientesController($scope, $interval, uiGridConstants, $location, $mdDialog, sData) {
   var self = this;
+  self.sData = sData;
+
+  self.showAdvanced = function(ev) {
+    if (self.getCurrentSelection())
+      $mdDialog.show({
+        controller: DialogController,
+        controllerAs: 'dialog',
+        bindToController: true,
+        templateUrl: '/views/modalPaciente.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: true,
+        fullscreen: self.customFullscreen // Only for -xs, -sm breakpoints.
+      })
+      .then(function(answer) {
+        self.status = 'You said the information was "' + answer + '".';
+      }, function() {
+        self.status = 'You cancelled the dialog.';
+      });
+  };
+
+  self.seleccionable = true;
 
   self.gridOptions = {
-    enableRowSelection: true,
+    enableRowSelection: false,
     enableRowHeaderSelection: false,
     paginationPageSizes: [25, 50, 75],
     paginationPageSize: 25,
@@ -20,20 +42,30 @@ function pacientesController($scope, $interval, uiGridConstants) {
       self.gridApi.grid.registerRowsProcessor(self.singleFilter, 200);
     },
     columnDefs: [
-      { field: 'nombre' },
+      { field: 'primerNombre' },
       { field: 'segundoNombre' },
-      { field: 'apellidoPaterno' },
+      { field: 'primerApellido' },
+      { field: 'segundoApellido' },
       { field: 'documento' },
-      { field: 'cumpleaños' },
+      { field: 'fechaNacimiento' },
       { field: 'estadoCivil' },
-      { field: 'ciudadOrigen' }
     ]
   };
 
   self.toggleRowSelection = function() {
+    self.sData.paciente = null;
     self.gridApi.selection.clearSelectedRows();
     self.gridOptions.enableRowSelection = !self.gridOptions.enableRowSelection;
     self.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
+  };
+
+  self.getCurrentSelection = function() {
+    self.sData.paciente = self.gridApi.selection.getSelectedRows()[0];
+    console.log(self.sData.paciente)
+    if (self.sData.paciente != undefined)
+      return true;
+    else return false;
+
   };
 
   self.filter = function() {
@@ -44,7 +76,7 @@ function pacientesController($scope, $interval, uiGridConstants) {
     var matcher = new RegExp(self.filterValue);
     renderableRows.forEach(function(row) {
       var match = false;
-      ['nombre', 'segundoNombre', 'apellidoPaterno'].forEach(function(field) {
+      ['primerNombre', 'segundoNombre', 'primerApellido', 'segundoApellido', 'documento'].forEach(function(field) {
         if (row.entity[field].match(matcher)) {
           match = true;
         }
@@ -60,607 +92,41 @@ function pacientesController($scope, $interval, uiGridConstants) {
     return self.filterValue;
   }, self.filter);
 
+  $scope.$watch(function() {
+    return self.seleccionable;
+  }, self.toggleRowSelection);
 
+  self.goEdit = function(url) {
+    if (self.getCurrentSelection())
+      $location.path('/addPaciente');
+  };
 
+  self.goAdd = function(url) {
+    self.sData.paciente = null;
+    $location.path('/addPaciente');
+  };
 
-  var data = [{
-      "nombre": 'Sergio',
-      "segundoNombre": 'Alexander',
-      "apellidoPaterno": 'Gutiérrez',
-      "apellidoMaterno": 'Bustos',
-      "documento": '1016012390',
-      "cumpleaños": '18/05/1988',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3138315841',
-      "telefono2": '5265086',
-      "direccion": 'Cra. 7G 150 25 Apto:401',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Luz',
-      "segundoNombre": 'Adriana',
-      "apellidoPaterno": 'Remolina',
-      "apellidoMaterno": 'Leon',
-      "documento": '35124634',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Fabricio',
-      "segundoNombre": 'Cristian',
-      "apellidoPaterno": 'Rodriguez',
-      "apellidoMaterno": 'Rodriguez',
-      "documento": '34256544',
-      "cumpleaños": '14/09/1990',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '456643',
-      "telefono2": '3445646',
-      "direccion": '20 de Julio',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Pepe',
-      "segundoNombre": 'Antonio',
-      "apellidoPaterno": 'Perez',
-      "apellidoMaterno": 'Peron',
-      "documento": '78345237',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    },
-    {
-      "nombre": 'Pepito',
-      "segundoNombre": 'Toño',
-      "apellidoPaterno": 'Perea',
-      "apellidoMaterno": 'Leon',
-      "documento": '134326678',
-      "cumpleaños": '14/09/1952',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '2343578',
-      "telefono2": '23467',
-      "direccion": 'Bosa',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Sergio',
-      "segundoNombre": 'Alexander',
-      "apellidoPaterno": 'Gutiérrez',
-      "apellidoMaterno": 'Bustos',
-      "documento": '1016012390',
-      "cumpleaños": '18/05/1988',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3138315841',
-      "telefono2": '5265086',
-      "direccion": 'Cra. 7G 150 25 Apto:401',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Luz',
-      "segundoNombre": 'Adriana',
-      "apellidoPaterno": 'Remolina',
-      "apellidoMaterno": 'Leon',
-      "documento": '35124634',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Fabricio',
-      "segundoNombre": 'Cristian',
-      "apellidoPaterno": 'Rodriguez',
-      "apellidoMaterno": 'Rodriguez',
-      "documento": '34256544',
-      "cumpleaños": '14/09/1990',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '456643',
-      "telefono2": '3445646',
-      "direccion": '20 de Julio',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Pepe',
-      "segundoNombre": 'Antonio',
-      "apellidoPaterno": 'Perez',
-      "apellidoMaterno": 'Peron',
-      "documento": '78345237',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    },
-    {
-      "nombre": 'Pepito',
-      "segundoNombre": 'Toño',
-      "apellidoPaterno": 'Perea',
-      "apellidoMaterno": 'Leon',
-      "documento": '134326678',
-      "cumpleaños": '14/09/1952',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '2343578',
-      "telefono2": '23467',
-      "direccion": 'Bosa',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Sergio',
-      "segundoNombre": 'Alexander',
-      "apellidoPaterno": 'Gutiérrez',
-      "apellidoMaterno": 'Bustos',
-      "documento": '1016012390',
-      "cumpleaños": '18/05/1988',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3138315841',
-      "telefono2": '5265086',
-      "direccion": 'Cra. 7G 150 25 Apto:401',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Luz',
-      "segundoNombre": 'Adriana',
-      "apellidoPaterno": 'Remolina',
-      "apellidoMaterno": 'Leon',
-      "documento": '35124634',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Fabricio',
-      "segundoNombre": 'Cristian',
-      "apellidoPaterno": 'Rodriguez',
-      "apellidoMaterno": 'Rodriguez',
-      "documento": '34256544',
-      "cumpleaños": '14/09/1990',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '456643',
-      "telefono2": '3445646',
-      "direccion": '20 de Julio',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Pepe',
-      "segundoNombre": 'Antonio',
-      "apellidoPaterno": 'Perez',
-      "apellidoMaterno": 'Peron',
-      "documento": '78345237',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    },
-    {
-      "nombre": 'Pepito',
-      "segundoNombre": 'Toño',
-      "apellidoPaterno": 'Perea',
-      "apellidoMaterno": 'Leon',
-      "documento": '134326678',
-      "cumpleaños": '14/09/1952',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '2343578',
-      "telefono2": '23467',
-      "direccion": 'Bosa',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Sergio',
-      "segundoNombre": 'Alexander',
-      "apellidoPaterno": 'Gutiérrez',
-      "apellidoMaterno": 'Bustos',
-      "documento": '1016012390',
-      "cumpleaños": '18/05/1988',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3138315841',
-      "telefono2": '5265086',
-      "direccion": 'Cra. 7G 150 25 Apto:401',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Luz',
-      "segundoNombre": 'Adriana',
-      "apellidoPaterno": 'Remolina',
-      "apellidoMaterno": 'Leon',
-      "documento": '35124634',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Fabricio',
-      "segundoNombre": 'Cristian',
-      "apellidoPaterno": 'Rodriguez',
-      "apellidoMaterno": 'Rodriguez',
-      "documento": '34256544',
-      "cumpleaños": '14/09/1990',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '456643',
-      "telefono2": '3445646',
-      "direccion": '20 de Julio',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Pepe',
-      "segundoNombre": 'Antonio',
-      "apellidoPaterno": 'Perez',
-      "apellidoMaterno": 'Peron',
-      "documento": '78345237',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    },
-    {
-      "nombre": 'Pepito',
-      "segundoNombre": 'Toño',
-      "apellidoPaterno": 'Perea',
-      "apellidoMaterno": 'Leon',
-      "documento": '134326678',
-      "cumpleaños": '14/09/1952',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '2343578',
-      "telefono2": '23467',
-      "direccion": 'Bosa',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Sergio',
-      "segundoNombre": 'Alexander',
-      "apellidoPaterno": 'Gutiérrez',
-      "apellidoMaterno": 'Bustos',
-      "documento": '1016012390',
-      "cumpleaños": '18/05/1988',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3138315841',
-      "telefono2": '5265086',
-      "direccion": 'Cra. 7G 150 25 Apto:401',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Luz',
-      "segundoNombre": 'Adriana',
-      "apellidoPaterno": 'Remolina',
-      "apellidoMaterno": 'Leon',
-      "documento": '35124634',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Fabricio',
-      "segundoNombre": 'Cristian',
-      "apellidoPaterno": 'Rodriguez',
-      "apellidoMaterno": 'Rodriguez',
-      "documento": '34256544',
-      "cumpleaños": '14/09/1990',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '456643',
-      "telefono2": '3445646',
-      "direccion": '20 de Julio',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Pepe',
-      "segundoNombre": 'Antonio',
-      "apellidoPaterno": 'Perez',
-      "apellidoMaterno": 'Peron',
-      "documento": '78345237',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    },
-    {
-      "nombre": 'Pepito',
-      "segundoNombre": 'Toño',
-      "apellidoPaterno": 'Perea',
-      "apellidoMaterno": 'Leon',
-      "documento": '134326678',
-      "cumpleaños": '14/09/1952',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '2343578',
-      "telefono2": '23467',
-      "direccion": 'Bosa',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Sergio',
-      "segundoNombre": 'Alexander',
-      "apellidoPaterno": 'Gutiérrez',
-      "apellidoMaterno": 'Bustos',
-      "documento": '1016012390',
-      "cumpleaños": '18/05/1988',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3138315841',
-      "telefono2": '5265086',
-      "direccion": 'Cra. 7G 150 25 Apto:401',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Luz',
-      "segundoNombre": 'Adriana',
-      "apellidoPaterno": 'Remolina',
-      "apellidoMaterno": 'Leon',
-      "documento": '35124634',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Fabricio',
-      "segundoNombre": 'Cristian',
-      "apellidoPaterno": 'Rodriguez',
-      "apellidoMaterno": 'Rodriguez',
-      "documento": '34256544',
-      "cumpleaños": '14/09/1990',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '456643',
-      "telefono2": '3445646',
-      "direccion": '20 de Julio',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Pepe',
-      "segundoNombre": 'Antonio',
-      "apellidoPaterno": 'Perez',
-      "apellidoMaterno": 'Peron',
-      "documento": '78345237',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    },
-    {
-      "nombre": 'Pepito',
-      "segundoNombre": 'Toño',
-      "apellidoPaterno": 'Perea',
-      "apellidoMaterno": 'Leon',
-      "documento": '134326678',
-      "cumpleaños": '14/09/1952',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '2343578',
-      "telefono2": '23467',
-      "direccion": 'Bosa',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Sergio',
-      "segundoNombre": 'Alexander',
-      "apellidoPaterno": 'Gutiérrez',
-      "apellidoMaterno": 'Bustos',
-      "documento": '1016012390',
-      "cumpleaños": '18/05/1988',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3138315841',
-      "telefono2": '5265086',
-      "direccion": 'Cra. 7G 150 25 Apto:401',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Luz',
-      "segundoNombre": 'Adriana',
-      "apellidoPaterno": 'Remolina',
-      "apellidoMaterno": 'Leon',
-      "documento": '35124634',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Fabricio',
-      "segundoNombre": 'Cristian',
-      "apellidoPaterno": 'Rodriguez',
-      "apellidoMaterno": 'Rodriguez',
-      "documento": '34256544',
-      "cumpleaños": '14/09/1990',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '456643',
-      "telefono2": '3445646',
-      "direccion": '20 de Julio',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Pepe',
-      "segundoNombre": 'Antonio',
-      "apellidoPaterno": 'Perez',
-      "apellidoMaterno": 'Peron',
-      "documento": '78345237',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    },
-    {
-      "nombre": 'Pepito',
-      "segundoNombre": 'Toño',
-      "apellidoPaterno": 'Perea',
-      "apellidoMaterno": 'Leon',
-      "documento": '134326678',
-      "cumpleaños": '14/09/1952',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '2343578',
-      "telefono2": '23467',
-      "direccion": 'Bosa',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Sergio',
-      "segundoNombre": 'Alexander',
-      "apellidoPaterno": 'Gutiérrez',
-      "apellidoMaterno": 'Bustos',
-      "documento": '1016012390',
-      "cumpleaños": '18/05/1988',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3138315841',
-      "telefono2": '5265086',
-      "direccion": 'Cra. 7G 150 25 Apto:401',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Luz',
-      "segundoNombre": 'Adriana',
-      "apellidoPaterno": 'Remolina',
-      "apellidoMaterno": 'Leon',
-      "documento": '35124634',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Fabricio',
-      "segundoNombre": 'Cristian',
-      "apellidoPaterno": 'Rodriguez',
-      "apellidoMaterno": 'Rodriguez',
-      "documento": '34256544',
-      "cumpleaños": '14/09/1990',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '456643',
-      "telefono2": '3445646',
-      "direccion": '20 de Julio',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Pepe',
-      "segundoNombre": 'Antonio',
-      "apellidoPaterno": 'Perez',
-      "apellidoMaterno": 'Peron',
-      "documento": '78345237',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    },
-    {
-      "nombre": 'Pepito',
-      "segundoNombre": 'Toño',
-      "apellidoPaterno": 'Perea',
-      "apellidoMaterno": 'Leon',
-      "documento": '134326678',
-      "cumpleaños": '14/09/1952',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '2343578',
-      "telefono2": '23467',
-      "direccion": 'Bosa',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Sergio',
-      "segundoNombre": 'Alexander',
-      "apellidoPaterno": 'Gutiérrez',
-      "apellidoMaterno": 'Bustos',
-      "documento": '1016012390',
-      "cumpleaños": '18/05/1988',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3138315841',
-      "telefono2": '5265086',
-      "direccion": 'Cra. 7G 150 25 Apto:401',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Luz',
-      "segundoNombre": 'Adriana',
-      "apellidoPaterno": 'Remolina',
-      "apellidoMaterno": 'Leon',
-      "documento": '35124634',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Fabricio',
-      "segundoNombre": 'Cristian',
-      "apellidoPaterno": 'Rodriguez',
-      "apellidoMaterno": 'Rodriguez',
-      "documento": '34256544',
-      "cumpleaños": '14/09/1990',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '456643',
-      "telefono2": '3445646',
-      "direccion": '20 de Julio',
-      "ciudad": 'Bogotá D.C',
-    }, {
-      "nombre": 'Pepe',
-      "segundoNombre": 'Antonio',
-      "apellidoPaterno": 'Perez',
-      "apellidoMaterno": 'Peron',
-      "documento": '78345237',
-      "cumpleaños": '14/09/1986',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '3345315841',
-      "telefono2": '234356',
-      "direccion": 'Icatá',
-      "ciudad": 'Bogotá D.C',
-    },
-    {
-      "nombre": 'Pepito',
-      "segundoNombre": 'Toño',
-      "apellidoPaterno": 'Perea',
-      "apellidoMaterno": 'Leon',
-      "documento": '134326678',
-      "cumpleaños": '14/09/1952',
-      "ciudadOrigen": 'Bogotá D.C',
-      "estadoCivil": 'Soltero',
-      "telefono1": '2343578',
-      "telefono2": '23467',
-      "direccion": 'Bosa',
-      "ciudad": 'Bogotá D.C',
-    },
-  ];
+  self.gridOptions.data = sData.pacientes;
+  $interval(function() {
+    self.gridApi.selection.selectRow(self.gridOptions.data[0]);
+    self.gridApi.selection.clearSelectedRows();
+  }, 0, 1);
 
-  self.gridOptions.data = data;
-  $interval(function() { self.gridApi.selection.selectRow(self.gridOptions.data[0]); }, 0, 1);
+  DialogController.$inject = ['$mdDialog', 'sData'];
+
+  function DialogController($mdDialog, sData) {
+    var self = this;
+    self.sData = sData;
+    self.hide = function() {
+      $mdDialog.hide();
+    };
+    self.cancel = function() {
+      $mdDialog.cancel();
+    };
+    self.answer = function(answer) {
+      $mdDialog.hide(answer);
+    };
+  }
+
 
 }

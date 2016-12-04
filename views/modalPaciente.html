@@ -1,0 +1,42 @@
+<md-dialog aria-label="Paciente" md-theme="eps-green">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Paciente {{dialog.sData.paciente.nombre}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="dialog.cancel()">
+          <md-icon class="fa fa-times fa-2x" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout-gt-sm="row">
+          <div flex>
+            <h3><strong>Primer nombre: </strong>{{dialog.sData.paciente.primerNombre}}</h3>
+            <h3><strong>Segundo nombre: </strong>{{dialog.sData.paciente.segundoNombre}}</h3>
+            <h3><strong>Primer apellido: </strong>{{dialog.sData.paciente.primerApellido}}</h3>
+            <h3><strong>Segundo apellido: </strong>{{dialog.sData.paciente.segundoApellido}}</h3>
+            <h3><strong>Documento: </strong>{{dialog.sData.paciente.documento}}</h3>
+            <h3><strong>Fecha de nacimiento: </strong>{{dialog.sData.paciente.cumpleanos}}</h3>
+            <h3><strong>Estado civil: </strong>{{dialog.sData.paciente.estadoCivil}}</h3>
+            <h3><strong>Sexo: </strong>{{dialog.sData.paciente.nombre}}</h3>
+          </div>
+          <div flex>
+            <h3><strong>Lugar de nacimiento: </strong>{{dialog.sData.paciente.lugarNacimiento}}</h3>
+            <h3><strong>Cidudad: </strong>{{dialog.sData.paciente.ciudad}}</h3>
+            <h3><strong>Dirección: </strong>{{dialog.sData.paciente.direcion}}</h3>
+            <h3><strong>Teléfono: </strong>{{dialog.sData.paciente.telefono}}</h3>
+            <h3><strong>Celular: </strong>{{dialog.sData.paciente.celular}}</h3>
+            <h3><strong>Grado de educación: </strong>{{dialog.sData.paciente.nombre}}</h3>
+            <h3><strong>Ocupación: </strong>{{dialog.sData.paciente.nombre}}</h3>
+          </div>
+        </div>
+      </div>
+
+    </md-dialog-content>
+
+
+  </form>
+</md-dialog>

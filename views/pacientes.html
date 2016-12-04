@@ -1,24 +1,52 @@
-<div class="container">
+<div class="contenido">
   <div layout="column" class="pasientes">
-    <div flex class="titulo">
+    <div flex class="titulo" layout="row">
+      <i class="fa fa-users fa-3x" aria-hidden="true"> </i>
       <h1>Pacientes</h1>
     </div>
 
     <div flex class="listado">
-      <input ng-model='pa.filterValue' /><button ng-click='pa.filter()'>Filter</button>
-      <md-button type="button" class="btn btn-success" ng-click="pa.toggleRowSelection()">Toggle rowSelection</md-button>
-      <strong>rowSelection:</strong> <span ng-bind="pa.gridApi.grid.options.enableRowSelection"></span>
+      <div layout="column">
+        <div>
+          <md-switch ng-model="pa.seleccionable" aria-label="Switch Seleccionable" class="right">
+            Editable{{pa.selec}}
+          </md-switch>
+        </div>
+      </div>
+
+      <div layout-gt-sm="row">
+        <div flex>
+          <md-input-container class="md-block search" flex-gt-xs md-theme="eps-green">
+            <label>Buscar</label>
+            <input ng-model="pa.filterValue">
+          </md-input-container>
+        </div>
+        <div class="text-right" flex>
+          <md-button class="md-icon-button" aria-label="Añadir paciente" ng-click="pa.goAdd()">
+            <md-icon class="fa fa-user-plus fa-2x"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="Editar paciente" ng-click="pa.goEdit()">
+            <md-icon class="fa fa-pencil fa-2x"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="Ver Paciente" ng-click="pa.showAdvanced($event)">
+            <md-icon class="fa fa-eye fa-2x"></md-icon>
+          </md-button>
+        </div>
+      </div>
       <div id="grid1" ui-grid="pa.gridOptions" ui-grid-selection ui-grid-pagination ui-grid-cellNav class="grid"></div>
-      <p>Current page: {{ pa.gridApi.pagination.getPage() }} of {{ pa.gridApi.pagination.getTotalPages() }}</p>
-      <md-button type="button" class="btn btn-success" ng-click="pa.gridApi.pagination.previousPage()">
-        previous page
-      </md-button>
-      <md-button type="button" class="btn btn-success" ng-click="pa.gridApi.pagination. nextPage()">
-        next page
-      </md-button>
-      <md-button type="button" class="btn btn-success" ng-click="pa.gridApi.pagination.seek(3)">
-        go to page 3
-      </md-button>
+      <div layout-gt-sm="row" class="paginador">
+        <div>
+          <md-button class="md-icon-button" aria-label="Página Anterior" ng-click="pa.gridApi.pagination.previousPage()">
+            <md-icon class="fa fa-arrow-left fa-2x"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="Página Siguiente" ng-click="pa.gridApi.pagination. nextPage()">
+            <md-icon class="fa fa-arrow-right fa-2x"></md-icon>
+          </md-button>
+        </div>
+        <div>
+          <p>Página: {{ pa.gridApi.pagination.getPage() }} de {{ pa.gridApi.pagination.getTotalPages() }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

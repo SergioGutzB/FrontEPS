@@ -1,7 +1,23 @@
+@import 'source/_variables.scss';
 body {
-  .gridStyle {
-    border: 1px solid rgb(212, 212, 212);
-    width: 600px;
-    height: 300px;
+  .pasientes {
+    .titulo {
+      color: $grey-600;
+      padding-top: 10px;
+      i {
+        padding-right: 10px;
+      }
+    }
+    md-switch:last-of-type {
+      float: right;
+    }
+    .search {
+      margin: 0px;
+    }
+    .gridStyle {
+      border: 1px solid rgb(212, 212, 212);
+      width: 600px;
+      height: 300px;
+    }
   }
 }

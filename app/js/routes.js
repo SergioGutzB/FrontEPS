@@ -1,6 +1,9 @@
 angular
   .module('Eps')
-  .config(appConfig);
+  .config(appConfig)
+  .run(function($rootScope) {
+    $rootScope.currentPage = 'inicio';
+  })
 
 function appConfig($routeProvider, $locationProvider) {
   $routeProvider.when('/', {
@@ -21,13 +24,20 @@ function appConfig($routeProvider, $locationProvider) {
     controllerAs: "ci"
   })
 
+  .when('/addPaciente', {
+    templateUrl: '../../views/addPaciente.html',
+    controller: 'PacienteAdd',
+    controllerAs: "padd"
+  })
+
   .otherwise({
     redirectTo: '/'
   });
 
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
-  // $locationProvider.html5Mode(true)
+  if (window.history && window.history.pushState) {
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
+    });
+  }
 }
