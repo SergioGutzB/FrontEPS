@@ -1,23 +1,15 @@
 @import 'source/_variables.scss';
 body {
   .pasientes {
-    .titulo {
-      color: $grey-600;
-      padding-top: 10px;
-      i {
-        padding-right: 10px;
-      }
-    }
     md-switch:last-of-type {
       float: right;
     }
     .search {
       margin: 0px;
     }
-    .gridStyle {
+    .grid {
       border: 1px solid rgb(212, 212, 212);
-      width: 600px;
-      height: 300px;
+      height: 500px;
     }
   }
 }

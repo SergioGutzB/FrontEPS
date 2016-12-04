@@ -63,6 +63,11 @@ body {
       width: 100%;
       .titulo {
         margin-bottom: 20px;
+        color: $grey-600;
+        padding-top: 10px;
+        i {
+          padding-right: 10px;
+        }
       }
     }
   }
