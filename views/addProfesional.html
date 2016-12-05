@@ -1,0 +1,92 @@
+<div class="contenido">
+  <div layout="column" class="pasientes">
+    <div flex class="titulo" layout="row">
+      <i class="fa {{proAdd.icon}} fa-3x" aria-hidden="true"></i> </i>
+      <h1>{{proAdd.title}}</h1>
+    </div>
+    <hr>
+    <div>
+      <form name="profesionalAdd" md-theme="eps-green">
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Primer nombre</label>
+            <input ng-model="proAdd.profesional.primerNombre" name="primerNombre" required>
+            <div ng-messages="profesionalAdd.primerNombre.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Segundo nombre</label>
+            <input ng-model="proAdd.profesional.segundoNombre" name="segundoNombre" required>
+            <div ng-messages="profesionalAdd.segundoNombre.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Primer apellido</label>
+            <input ng-model="proAdd.profesional.primerApellido" name="primerApellido" required>
+            <div ng-messages="profesionalAdd.primerApellido.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Segundo apellido</label>
+            <input ng-model="proAdd.profesional.segundoApellido" name="segundoApellido" required>
+            <div ng-messages="profesionalAdd.segundoApellido.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Documento</label>
+            <input ng-model="proAdd.profesional.documento" required>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Fecha de nacimiento</label>
+            <md-datepicker ng-model="proAdd.profesional.fechaNacimiento" value="{{proAdd.profesional.fechaNacimiento}}" required></md-datepicker>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Sexo</label>
+            <md-select name="sexo" ng-model="proAdd.profesional.sexo" required>
+              <md-option value="F">Femenino</md-option>
+              <md-option value="M">Masculino</md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Celular</label>
+            <input ng-model="proAdd.profesional.celular" required>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Especialidad</label>
+            <md-select name="espceialidad" ng-model="proAdd.profesional.espceialidad" required>
+              <md-option value="psi">Psicología</md-option>
+              <md-option value="fono">Fono-Audiología</md-option>
+              <md-option value="teo">Terapia ocupacional</md-option>
+            </md-select>
+          </md-input-container>
+
+
+        </div>
+
+        <div layout-gt-xs="row">
+          <md-button type="submit" class="md-primary md-raised md-hue-2">Guardar</md-button>
+        </div>
+
+
+
+      </form>
+    </div>
+  </div>
+</div>

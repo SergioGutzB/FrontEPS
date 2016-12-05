@@ -36,6 +36,19 @@ function appConfig($routeProvider, $locationProvider) {
     controllerAs: "hc"
   })
 
+  .when('/profesionales', {
+    templateUrl: '/views/profesionales.html',
+    controller: 'Profesionales',
+    controllerAs: "pro"
+  })
+
+  .when('/addProfesional', {
+    templateUrl: '/views/addProfesional.html',
+    controller: 'ProfesionalAdd',
+    controllerAs: "proAdd"
+  })
+
+
 
   .otherwise({
     redirectTo: '/'

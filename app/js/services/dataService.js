@@ -3,6 +3,31 @@ angular
   .service('sData', [function() {
     return {
       paciente: null,
+      profesional: null,
+      especialidades: ['psi', 'fono', 'teo'],
+      profesionales: [{
+          "primerNombre": 'Luz',
+          "segundoNombre": 'Adriana',
+          "primerApellido": 'Remolina',
+          "segundoApellido": 'Leon',
+          "documento": '129345625',
+          "fechaNacimiento": '14/09/1989',
+          "celular": '3014562347',
+          "especialidad": "psicologia",
+          "consultorio": 205
+        },
+        {
+          "primerNombre": 'Antonia',
+          "segundoNombre": 'Carolina',
+          "primerApellido": 'Camargo',
+          "segundoApellido": 'Sotamarchan',
+          "documento": '3241398',
+          "fechaNacimiento": '14/09/1978',
+          "celular": '3142354576',
+          "especialidad": "teo",
+          "consultorio": 103
+        }
+      ],
       pacientes: [{
           "primerNombre": 'Sergio',
           "segundoNombre": 'Alexander',
