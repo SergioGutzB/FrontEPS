@@ -1,6 +1,8 @@
-@charset "UTF-8";body .pasientes md-switch:last-of-type{float:right}
-body .pasientes .search{margin:0}body .pasientes .grid{border:1px solid #d4d4d4;height:500px}
-/* *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License) */@font-face{font-family:'FontAwesome';src:url("../fonts/font-awesome/fontawesome-webfont.eot?v=4.7.0");src:url("../fonts/font-awesome/fontawesome-webfont.eot?v=4.7.0#iefix") format("embedded-opentype"),url("../fonts/font-awesome/fontawesome-webfont.woff2?v=4.7.0") format("woff2"),url("../fonts/font-awesome/fontawesome-webfont.woff?v=4.7.0") format("woff"),url("../fonts/font-awesome/fontawesome-webfont.ttf?v=4.7.0") format("truetype"),url("../fonts/font-awesome/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");font-weight:normal;font-style:normal}
+@charset "UTF-8";@media only screen and (min-width:1px){body .hc md-content{background-color:transparent !important}
+body .hc md-content md-tabs{background:#f6f6f6;border:1px solid #e1e1e1}body .hc md-content md-tabs md-tabs-wrapper{background:white}
+body .hc md-content h1:first-child{margin-top:0}body .hc h3{color:#757575;text-align:center}
+}body .pasientes md-switch:last-of-type{float:right}body .pasientes .search{margin:0}
+body .pasientes .grid{border:1px solid #d4d4d4;height:500px}/* *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License) */@font-face{font-family:'FontAwesome';src:url("../fonts/font-awesome/fontawesome-webfont.eot?v=4.7.0");src:url("../fonts/font-awesome/fontawesome-webfont.eot?v=4.7.0#iefix") format("embedded-opentype"),url("../fonts/font-awesome/fontawesome-webfont.woff2?v=4.7.0") format("woff2"),url("../fonts/font-awesome/fontawesome-webfont.woff?v=4.7.0") format("woff"),url("../fonts/font-awesome/fontawesome-webfont.ttf?v=4.7.0") format("truetype"),url("../fonts/font-awesome/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");font-weight:normal;font-style:normal}
 .fa{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .fa-lg{font-size:1.33333em;line-height:.75em;vertical-align:-15%}.fa-2x{font-size:2em}
 .fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-fw{width:1.28571em;text-align:center}
@@ -378,12 +380,13 @@ body .pasientes .search{margin:0}body .pasientes .grid{border:1px solid #d4d4d4;
 .fa-superpowers:before{content:""}.fa-wpexplorer:before{content:""}
 .fa-meetup:before{content:""}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 .sr-only-focusable:active,.sr-only-focusable:focus{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto}
-body{color:#424242}body .md-toolbar-tools{padding:20px}body md-toolbar h1,body md-toolbar h2,body md-toolbar h3,body md-toolbar h4,body md-toolbar i{color:#fff}
+body{color:#424242}body .md-toolbar-tools{padding:20px}body .div-horizontal{background-image:url("/app/img/div-horizontal.png");display:block;width:100%;height:2px;margin-bottom:10px;padding:0}
+body md-toolbar h1,body md-toolbar h2,body md-toolbar h3,body md-toolbar h4,body md-toolbar i{color:#fff}
 body .content-layout{height:calc(100vh - 64px)}body .content-layout .barra-lateral{background-color:#fafafa;height:100%}
 body .content-layout .barra-lateral .menu ul{margin:0;padding:0;width:100%}body .content-layout .barra-lateral .menu ul li{background-color:#fafafa;padding:15px 20px;color:#424242;cursor:pointer;-moz-transition-property:background-color,fill;-o-transition-property:background-color,fill;-webkit-transition-property:background-color,fill;transition-property:background-color,fill;-moz-transition-duration:.6s;-o-transition-duration:.6s;-webkit-transition-duration:.6s;transition-duration:.6s;-moz-transition-timing-function:cubic-bezier(0.35,0,0.25,1);-o-transition-timing-function:cubic-bezier(0.35,0,0.25,1);-webkit-transition-timing-function:cubic-bezier(0.35,0,0.25,1);transition-timing-function:cubic-bezier(0.35,0,0.25,1)}
 body .content-layout .barra-lateral .menu ul li i{padding-right:10px}body .content-layout .barra-lateral .menu ul li:hover{background-color:#eee;-moz-transition-property:background-color,fill;-o-transition-property:background-color,fill;-webkit-transition-property:background-color,fill;transition-property:background-color,fill;-moz-transition-duration:.6s;-o-transition-duration:.6s;-webkit-transition-duration:.6s;transition-duration:.6s;-moz-transition-timing-function:cubic-bezier(0.35,0,0.25,1);-o-transition-timing-function:cubic-bezier(0.35,0,0.25,1);-webkit-transition-timing-function:cubic-bezier(0.35,0,0.25,1);transition-timing-function:cubic-bezier(0.35,0,0.25,1)}
 body .content-layout .barra-lateral .menu ul li:focus{outline:0}body .container{background-color:#f5f5f5;margin:0;padding:0}
-body .container .contenido{background-color:#fff;margin:20px;padding:10px 20px;width:100%}
+body .container .contenido{background-color:#fff;margin:20px;padding:20px;width:100%;overflow-y:scroll}
 body .container .contenido .titulo{margin-bottom:20px;color:#757575;padding-top:10px}
 body .container .contenido .titulo i{padding-right:10px}body .sing-out{padding-left:20px}
 body .active{background-color:#eee !important}body .fa-2x{font-size:22px}body .right{float:right}

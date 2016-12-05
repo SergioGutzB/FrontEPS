@@ -61,7 +61,7 @@ function pacientesController($scope, $interval, uiGridConstants, $location, $mdD
 
   self.getCurrentSelection = function() {
     self.sData.paciente = self.gridApi.selection.getSelectedRows()[0];
-    console.log(self.sData.paciente)
+    console.log(self.sData.paciente);
     if (self.sData.paciente != undefined)
       return true;
     else return false;
@@ -96,9 +96,9 @@ function pacientesController($scope, $interval, uiGridConstants, $location, $mdD
     return self.seleccionable;
   }, self.toggleRowSelection);
 
-  self.goEdit = function(url) {
+  self.go = function(url) {
     if (self.getCurrentSelection())
-      $location.path('/addPaciente');
+      $location.path('/' + url);
   };
 
   self.goAdd = function(url) {

@@ -1,0 +1,37 @@
+@import 'source/_variables.scss';
+@import 'source/_mixins.scss';
+@media only screen and (min-width:1px) {
+  body {
+    .hc {
+      md-content {
+        background-color: transparent !important;
+      }
+      md-content md-tabs {
+        background: #f6f6f6;
+        border: 1px solid #e1e1e1;
+      }
+      md-content md-tabs md-tabs-wrapper {
+        background: white;
+      }
+      md-content h1:first-child {
+        margin-top: 0;
+      }
+      h3 {
+        color: $grey-600;
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media (min-width: 960px) and(max-width: 1279px) {
+  body {}
+}
+
+@media (min-width: 600px) and(max-width: 959px) {
+  body {}
+}
+
+@media (max-width: 599px) {
+  body {}
+}

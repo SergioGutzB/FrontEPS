@@ -30,6 +30,13 @@ function appConfig($routeProvider, $locationProvider) {
     controllerAs: "padd"
   })
 
+  .when('/hc', {
+    templateUrl: '/views/historia_clinica.html',
+    controller: 'HC',
+    controllerAs: "hc"
+  })
+
+
   .otherwise({
     redirectTo: '/'
   });
