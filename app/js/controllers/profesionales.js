@@ -7,6 +7,7 @@ function profesionalesController($scope, $interval, uiGridConstants, $location, 
   self.sData = sData;
 
   self.seleccionable = true;
+  self.filterValue = '';
 
   self.gridOptions = {
     enableRowSelection: false,
@@ -41,7 +42,6 @@ function profesionalesController($scope, $interval, uiGridConstants, $location, 
 
   self.getCurrentSelection = function() {
     self.sData.profesional = self.gridApi.selection.getSelectedRows()[0];
-    console.log(self.sData.profesional);
     if (self.sData.profesional != undefined)
       return true;
     else return false;
@@ -49,17 +49,16 @@ function profesionalesController($scope, $interval, uiGridConstants, $location, 
   };
 
   self.filter = function() {
-    self.gridApi.grid.refresh();
+    if (self.filterValue)
+      self.gridApi.grid.refresh();
   };
 
   self.singleFilter = function(renderableRows) {
     var matcher = new RegExp(self.filterValue);
     renderableRows.forEach(function(row) {
       var match = false;
-      console.log('acá vamos...');
       ['primerNombre', 'primerApellido', 'segundoApellido', 'documento', 'especialidad'].forEach(function(field) {
         if (row.entity[field].match(matcher)) {
-          console.log('acá ya No vamos...');
           match = true;
         }
       });
@@ -84,7 +83,7 @@ function profesionalesController($scope, $interval, uiGridConstants, $location, 
   };
 
   self.goAdd = function(url) {
-    self.sData.paciente = null;
+    self.sData.profesional = null;
     $location.path('/addProfesional');
   };
 

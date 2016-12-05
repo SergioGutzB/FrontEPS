@@ -70,11 +70,16 @@
 
           <md-input-container class="md-block" flex-gt-xs>
             <label>Especialidad</label>
-            <md-select name="espceialidad" ng-model="proAdd.profesional.espceialidad" required>
+            <md-select name="especialidad" ng-model="proAdd.profesional.especialidad" required>
               <md-option value="psi">Psicología</md-option>
               <md-option value="fono">Fono-Audiología</md-option>
               <md-option value="teo">Terapia ocupacional</md-option>
             </md-select>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Consultorio</label>
+            <input ng-model="proAdd.profesional.consultorio" type="number" required>
           </md-input-container>
 
 

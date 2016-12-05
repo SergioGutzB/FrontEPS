@@ -13,8 +13,9 @@ angular
           "documento": '129345625',
           "fechaNacimiento": '14/09/1989',
           "celular": '3014562347',
-          "especialidad": "psicologia",
-          "consultorio": 205
+          "especialidad": 'psi',
+          "consultorio": '205',
+          "sexo": 'F'
         },
         {
           "primerNombre": 'Antonia',
@@ -24,8 +25,21 @@ angular
           "documento": '3241398',
           "fechaNacimiento": '14/09/1978',
           "celular": '3142354576',
-          "especialidad": "teo",
-          "consultorio": 103
+          "especialidad": 'teo',
+          "consultorio": '103',
+          "sexo": 'F'
+        },
+        {
+          "primerNombre": 'Mariana',
+          "segundoNombre": 'Ester',
+          "primerApellido": 'Rebeca',
+          "segundoApellido": 'Roncancio',
+          "documento": '12352',
+          "fechaNacimiento": '14/09/1956',
+          "celular": '5634532',
+          "especialidad": 'psi',
+          "consultorio": '803',
+          "sexo": 'F'
         }
       ],
       pacientes: [{

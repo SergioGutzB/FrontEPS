@@ -2,10 +2,17 @@ var eps = angular.module('Eps', [
   'ngRoute',
   'ngMaterial',
   'ngMessages',
+  'ngAnimate',
   'ui.grid',
   'ui.grid.pagination',
   'ui.grid.selection',
   'ServeData',
+  'mwl.calendar',
+  'ui.bootstrap',
+  'colorpicker.module',
+  'oc.lazyLoad'
+
+
 ]);
 
 eps.config(function($mdThemingProvider) {
@@ -20,3 +27,9 @@ eps.config(function($mdThemingProvider) {
     .accentPalette('orange');
 
 });
+
+eps.config(['calendarConfig', function(calendarConfig) {
+  console.log(calendarConfig); //view all available config
+  calendarConfig.dateFormatter = 'moment'; // use moment to format dates
+  calendarConfig.allDateFormats.moment.date.hour = 'HH:mm';
+}]);

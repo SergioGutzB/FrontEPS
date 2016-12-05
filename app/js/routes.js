@@ -21,7 +21,7 @@ function appConfig($routeProvider, $locationProvider) {
   .when('/citas_medicas', {
     templateUrl: '../../views/citas.html',
     controller: 'Citas',
-    controllerAs: "ci"
+    controllerAs: "vm"
   })
 
   .when('/addPaciente', {
