@@ -1,122 +1,89 @@
 <div class="contenido">
-  <div layout="column" class="pasientes">
+  <div layout="column" class="pasientes" md-theme="eps-green">
     <div flex class="titulo" layout="row">
-      <i class="fa fa-user-md fa-3x" aria-hidden="true"> </i>
-      <h1>Profesionales</h1>
+      <i class="fa fa-calendar-plus-o fa-3x" aria-hidden="true"> </i>
+      <h1>Nueva Cíta</h1>
     </div>
+    <form>
+      <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Especialidad</label>
+          <md-select name="especialidad" ng-model="ci.especialidad" required>
+            <md-option><em>None</em></md-option>
+            <md-option value="psi">Psicología</md-option>
+            <md-option value="fono">Fono-Audiología</md-option>
+            <md-option value="teo">Terapia ocupacional</md-option>
+          </md-select>
+        </md-input-container>
 
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Profesional</label>
+          <md-select name="profesional" ng-model="ci.profesional" required>
+            <md-option><em>None</em></md-option>
+            <md-option value="psi">Psicología</md-option>
+            <md-option value="fono">Fono-Audiología</md-option>
+            <md-option value="teo">Terapia ocupacional</md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm layout-align="end center">
+          <md-checkbox ng-model="ci.cita.valoracion" aria-label="Checkbox 1">
+            Valoración
+          </md-checkbox>
+        </md-input-container>
+      </div>
+      <div layout-gt-sm="row">
 
-    <div>
-      <h2 class="text-center">{{ vm.calendarTitle }}</h2>
-      <div class="row">
-
-        <div class="col-md-6 text-center">
-          <div class="btn-group">
-
-            <button class="btn btn-primary" mwl-date-modifier date="vm.viewDate" decrement="vm.calendarView" ng-click="vm.cellIsOpen = false">
-          Previous
-        </button>
-            <button class="btn btn-default" mwl-date-modifier date="vm.viewDate" set-to-today ng-click="vm.cellIsOpen = false">
-          Today
-        </button>
-            <button class="btn btn-primary" mwl-date-modifier date="vm.viewDate" increment="vm.calendarView" ng-click="vm.cellIsOpen = false">
-          Next
-        </button>
-          </div>
-        </div>
-
-        <br class="visible-xs visible-sm">
-
-        <div class="col-md-6 text-center">
-          <div class="btn-group">
-            <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'" ng-click="vm.cellIsOpen = false">Year</label>
-            <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'" ng-click="vm.cellIsOpen = false">Month</label>
-            <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'" ng-click="vm.cellIsOpen = false">Week</label>
-            <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'" ng-click="vm.cellIsOpen = false">Day</label>
-          </div>
-        </div>
-
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Fecha de Cita</label>
+          <md-datepicker ng-model="ci.cita.startsAt" md-placeholder="Enter date"></md-datepicker>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Hora Fnicio</label>
+          <input mdc-datetime-picker="Hora inicio" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.cita.startsAt" class=" md-input">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Hora Fin</label>
+          <input mdc-datetime-picker="Hora fin" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.cita.endsAt" class=" md-input">
+        </md-input-container>
       </div>
 
-      <br>
 
-      <mwl-calendar events="vm.events" view="vm.calendarView" view-title="vm.calendarTitle" view-date="vm.viewDate" on-event-click="vm.eventClicked(calendarEvent)" on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-        cell-is-open="vm.cellIsOpen" day-view-start="07:00" day-view-end="17:00" day-view-split="30" cell-modifier="vm.modifyCell(calendarCell)" cell-auto-open-disabled="true" on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
-      </mwl-calendar>
+      <div layout-gt-xs="row">
+        <md-button ng-click="ci.add()" class="md-primary md-raised md-hue-2">Guardar cita</md-button>
+      </div>
+    </form>
+    <br/>
+    <div class="div-horizontal"> </div>
 
-      <br><br><br>
-
-      <h3 id="event-editor">
-        Edit events
-        <button class="btn btn-primary pull-right" ng-click="vm.addEvent()">
-      Add new
-    </button>
-        <div class="clearfix"></div>
-      </h3>
-
-      <table class="table table-bordered">
-
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Primary color</th>
-            <th>Secondary color</th>
-            <th>Starts at</th>
-            <th>Ends at</th>
-            <th>Remove</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr ng-repeat="event in vm.events track by $index">
-            <td>
-              <input type="text" class="form-control" ng-model="event.title">
-            </td>
-            <td>
-              <input class="form-control" colorpicker type="text" ng-model="event.color.primary">
-            </td>
-            <td>
-              <input class="form-control" colorpicker type="text" ng-model="event.color.secondary">
-            </td>
-            <td>
-              <p class="input-group" style="max-width: 250px">
-                <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.startsAt" is-open="event.startOpen" close-text="Close">
-                <span class="input-group-btn">
-              <button
-                type="button"
-                class="btn btn-default"
-                ng-click="vm.toggle($event, 'startOpen', event)">
-                <i class="glyphicon glyphicon-calendar"></i>
-              </button>
-            </span>
-              </p>
-              <div uib-timepicker ng-model="event.startsAt" hour-step="1" minute-step="15" show-meridian="true">
-              </div>
-            </td>
-            <td>
-              <p class="input-group" style="max-width: 250px">
-                <input type="text" class="form-control" readonly uib-datepicker-popup="dd MMMM yyyy" ng-model="event.endsAt" is-open="event.endOpen" close-text="Close">
-                <span class="input-group-btn">
-              <button
-                type="button"
-                class="btn btn-default"
-                ng-click="vm.toggle($event, 'endOpen', event)">
-                <i class="glyphicon glyphicon-calendar"></i>
-              </button>
-            </span>
-              </p>
-              <div uib-timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true">
-              </div>
-            </td>
-            <td>
-              <button class="btn btn-danger" ng-click="vm.evtents.splice($index, 1)">
-            Delete
-          </button>
-            </td>
-          </tr>
-        </tbody>
-
-      </table>
+    <h3>Estado de la Agenda</h3>
+    <br />
+    <!--<h2 class="text-center">{{ ci.calendarTitle }}</h2>-->
+    <div layout-gt-sm="row">
+      <div flex-gt-sm layout="row" layout-align="start center">
+        <md-button class="md-primary" mwl-date-modifier date="ci.viewDate" decrement="ci.calendarView" ng-click="ci.cellIsOpen = false">
+          Anterior
+        </md-button>
+        <md-button class="md-primary" mwl-date-modifier date="ci.viewDate" set-to-today ng-click="ci.cellIsOpen = false">
+          Hoy
+        </md-button>
+        <md-button class="md-primary" mwl-date-modifier date="ci.viewDate" increment="ci.calendarView" ng-click="ci.cellIsOpen = false">
+          Siguiente
+        </md-button>
+      </div>
+      <div flex-gt-sm layout="row" layout-align="end center">
+        <md-button class="md-primary" ng-model="ci.calendarView" uib-btn-radio="'year'" ng-click="ci.cellIsOpen = false">Año</md-button>
+        <md-button class="md-primary" ng-model="ci.calendarView" uib-btn-radio="'month'" ng-click="ci.cellIsOpen = false">Mes</md-button>
+        <md-button class="md-primary" ng-model="ci.calendarView" uib-btn-radio="'week'" ng-click="ci.cellIsOpen = false">Semana</md-button>
+        <md-button class="md-primary" ng-model="ci.calendarView" uib-btn-radio="'day'" ng-click="ci.cellIsOpen = false">Día</md-button>
+      </div>
     </div>
+
+    <br>
+
+    <mwl-calendar events="ci.events" view="ci.calendarView" view-title="ci.calendarTitle" view-date="ci.viewDate" on-event-click="ci.eventClicked(calendarEvent)" on-event-times-changed="ci.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+      cell-is-open="ci.cellIsOpen" day-view-start="07:00" day-view-end="17:00" day-view-split="30" cell-modifier="ci.modifyCell(calendarCell)" cell-auto-open-disabled="true" on-timespan-click="ci.timespanClicked(calendarDate, calendarCell)">
+    </mwl-calendar>
+
+
   </div>
 </div>

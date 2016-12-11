@@ -1,18 +1,21 @@
 <div class="contenido">
   <div layout="column" class="pasientes">
     <div flex class="titulo" layout="row">
-      <i class="fa {{padd.icon}} fa-3x" aria-hidden="true"></i> </i>
-      <h1>{{padd.title}}</h1>
+      <i class="fa {{pageIcon}} fa-3x" aria-hidden="true"></i> </i>
+      <h1>{{pageTitle}}</h1>
     </div>
     <hr>
     <div>
       <form name="pacienteAdd" md-theme="eps-green">
 
+        <h5 class="subtitle">INFORMACIÓN BÁSICA DEL PACIENTE</h5>
+
+
         <div layout-gt-xs="row">
           <md-input-container class="md-block" flex-gt-xs>
             <label>Primer nombre</label>
-            <input ng-model="padd.paciente.primerNombre" name="primerNombre" required>
-            <div ng-messages="pacienteAdd.primerNombre.$error">
+            <input ng-model="padd.paciente.name" name="name" required>
+            <div ng-messages="pacienteAdd.name.$error">
               <div ng-message="required">Este campo es requerido.</div>
             </div>
           </md-input-container>
@@ -27,8 +30,8 @@
 
           <md-input-container class="md-block" flex-gt-xs>
             <label>Primer apellido</label>
-            <input ng-model="padd.paciente.primerApellido" name="primerApellido" required>
-            <div ng-messages="pacienteAdd.primerApellido.$error">
+            <input ng-model="padd.paciente.last_name" name="last_name" required>
+            <div ng-messages="pacienteAdd.last_name.$error">
               <div ng-message="required">Este campo es requerido.</div>
             </div>
           </md-input-container>
@@ -45,12 +48,12 @@
         <div layout-gt-xs="row">
           <md-input-container class="md-block" flex-gt-xs>
             <label>Documento</label>
-            <input ng-model="padd.paciente.documento" required>
+            <input ng-model="padd.paciente.document" required>
           </md-input-container>
 
           <md-input-container class="md-block" flex-gt-xs>
             <label>Cumpleaños</label>
-            <md-datepicker ng-model="padd.paciente.fechaNacimiento" value="{{padd.paciente.fechaNacimiento}}" required></md-datepicker>
+            <md-datepicker ng-model="padd.paciente.birthdate" value="{{padd.paciente.birthdate}}" required></md-datepicker>
           </md-input-container>
 
           <md-input-container class="md-block" flex-gt-xs>
@@ -117,6 +120,76 @@
             <input ng-model="padd.paciente.ocupacion" required>
           </md-input-container>
         </div>
+
+        <h5 class="subtitle">INFORMACIÓN DEL ACUDIENTE</h5>
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>No. Documento</label>
+            <input ng-model="padd.paciente.acudiente.documento" type="number">
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Lugar Expedición</label>
+            <input ng-model="padd.paciente.acudiente.lugarExpedicion">
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Nombre del Acudiente</label>
+            <input ng-model="padd.paciente.acudiente.nombre">
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Dirección</label>
+            <input ng-model="padd.paciente.acudiente.direccion">
+          </md-input-container>
+        </div>
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Parentesco o cargo</label>
+            <input ng-model="padd.paciente.acudiente.parentesco">
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Institución Responsable</label>
+            <input ng-model="padd.paciente.acudiente.institucion">
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Teléfono</label>
+            <input ng-model="padd.paciente.acudiente.nombre" type="number">
+          </md-input-container>
+
+        </div>
+
+
+        <h5 class="subtitle">ASEGURAMIENTO SOCIAL</h5>
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Entidad</label>
+            <input ng-model="padd.paciente.social.entidad">
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Tipo Afiliación</label>
+            <input ng-model="padd.paciente.social.afiliacion">
+          </md-input-container>
+        </div>
+        <div layout-gt-xs="row">
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Nivel de Usuario</label>
+            <input ng-model="padd.paciente.social.nivel">
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>No Carnet</label>
+            <input ng-model="padd.paciente.social.carnet">
+          </md-input-container>
+        </div>
+        <div class="div-horizontal"> </div>
 
         <div layout-gt-xs="row">
           <md-button type="submit" class="md-primary md-raised md-hue-2">Guardar</md-button>

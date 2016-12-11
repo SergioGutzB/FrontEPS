@@ -1,13 +1,16 @@
 var eps = angular.module('Eps');
 eps.controller('Profesionales', profesionalesController);
-profesionalesController.$inject = ['$scope', '$interval', 'uiGridConstants', '$location', '$mdDialog', 'sData'];
+profesionalesController.$inject = ['$scope', '$rootScope', '$interval', 'uiGridConstants', '$location', '$mdDialog', 'sData', 'eps'];
 
-function profesionalesController($scope, $interval, uiGridConstants, $location, $mdDialog, sData) {
+function profesionalesController($scope, $rootScope, $interval, uiGridConstants, $location, $mdDialog, sData, eps) {
   var self = this;
   self.sData = sData;
 
   self.seleccionable = true;
   self.filterValue = '';
+
+  $rootScope.pageTitle = 'Pacientes';
+  $rootScope.pageIcon = 'fa-user-md';
 
   self.gridOptions = {
     enableRowSelection: false,
@@ -86,6 +89,15 @@ function profesionalesController($scope, $interval, uiGridConstants, $location, 
     self.sData.profesional = null;
     $location.path('/addProfesional');
   };
+
+  eps.getProfesionales()
+    .then(function(res) {
+      console.log("proseionales..");
+      console.log(res.data);
+    }, function(error) {
+      console.log("error..");
+      console.log(error);
+    })
 
   self.gridOptions.data = self.sData.profesionales;
 

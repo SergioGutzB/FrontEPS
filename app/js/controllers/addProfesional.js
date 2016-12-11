@@ -1,12 +1,13 @@
 var eps = angular.module('Eps');
 eps.controller('ProfesionalAdd', profesionalAddController);
-profesionalAddController.$inject = ['$scope', 'sData'];
+profesionalAddController.$inject = ['$scope', '$rootScope', 'sData'];
 
-function profesionalAddController($scope, sData) {
+function profesionalAddController($scope, $rootScope, sData) {
   var self = this;
   self.sData = sData;
-  self.icon = 'fa-user-plus';
-  self.title = 'Registrar Paciente';
+
+  $rootScope.pageTitle = 'Registrar Profesional';
+  $rootScope.pageIcon = 'fa-user-md';
 
   if (self.sData.profesional !== null) {
     self.profesional = self.sData.profesional;

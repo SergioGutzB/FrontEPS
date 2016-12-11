@@ -1,3 +1,27 @@
-<div class="container">
-  <h1>Vista - Administración</h1>
+<div class="contenido">
+  <div layout="column" class="pasientes">
+    <div flex class="titulo" layout="row">
+      <i class="fa {{pageIcon}} fa-3x" aria-hidden="true"></i>
+      <h1>{{pageTitle}}</h1>
+    </div>
+
+    <div>
+      <form name="esp" md-theme="eps-green">
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Especialidad</label>
+            <input ng-model="ad.especialidad" name="especialidad" required>
+            <div ng-messages="esp.especialidad.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+            </div>
+          </md-input-container>
+        </div>
+        <div layout-gt-xs="row">
+          <md-button ng-click="ad.addEspecialidad()" class="md-primary md-raised md-hue-2">Guardar</md-button>
+        </div>
+      </form>
+
+    </div>
+  </div>
 </div>

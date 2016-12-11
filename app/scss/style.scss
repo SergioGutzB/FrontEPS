@@ -20,8 +20,14 @@ body {
     h2,
     h3,
     h4,
-    i {
-      color: #fff;
+    i,
+    md-icon.fa {
+      color: #fff !important;
+    }
+    .titulo {
+      i {
+        padding-right: 10px;
+      }
     }
   }
   .content-layout {
@@ -72,12 +78,29 @@ body {
       padding: 20px;
       width: 100%;
       overflow-y: scroll;
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        color: $grey-600;
+      }
       .titulo {
         margin-bottom: 20px;
         color: $grey-600;
         padding-top: 10px;
         i {
           padding-right: 10px;
+        }
+      }
+      form {
+        .subtitle {
+          background-color: #9ccc65;
+          line-height: 1.5;
+          padding: 5px 10px;
+          margin-bottom: 20px;
+          color: #fff;
+          font-weight: 600;
         }
       }
     }
@@ -96,5 +119,9 @@ body {
   }
   .text-right {
     text-align: right;
+  }
+  .cal-day-box .day-highlight {
+    width: auto !important;
+    right: 100px !important;
   }
 }

@@ -9,6 +9,7 @@
   <link rel="stylesheet" type="text/css" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
   <link rel="stylesheet" type="text/css" href="bower_components/angular-material/angular-material.min.css">
   <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/angular-material-datetimepicker/css/material-datetimepicker.min.css">
 
 
   <link href="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.25/css/colorpicker.min.css" rel="stylesheet">
@@ -23,31 +24,43 @@
 
     <md-toolbar md-theme="eps-green">
       <div class="md-toolbar-tools" layout-sm="column" layout-gt-sm="row">
-        <h1>Usuario</h1>
+        <h1 ng-if="currentPage!='login'" flex-md="20" flex-lg="15" flex-gt-lg="10">{{usuario}}</h1>
+        <div flex class="titulo" layout="row">
+          <i class="fa {{pageIcon}} fa-2x" aria-hidden="true"></i> </i>
+          <h1>{{pageTitle}}</h1>
+        </div>
         <span flex></span>
-        <h3>Fecha</h3>
-        <a href="#" class="sing-out"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a>
+        <h3>{{date}}</h3>
+        <md-button class="md-icon-button" aria-label="Editar paciente" ng-click="signOut()">
+          <md-icon class="fa fa-sign-out fa-2x"></md-icon>
+          <md-tooltip>Salir</md-tooltip>
+        </md-button>
       </div>
     </md-toolbar>
 
     <div layout-sm="column" layout-gt-sm="row" class="content-layout">
-      <div flex="20" class="barra-lateral" ng-controller="Index as vm">
+      <div ng-if="currentPage!='login'" flex-md="20" flex-lg="15" flex-gt-lg="10" class="barra-lateral" ng-controller="Index as vm">
         <div class="perfil">
         </div>
         <div class="menu">
           <ul>
             <li ng-class="{active: currentPage=='inicio'}" ng-click="vm.go('')"><i class="fa fa-home fa-2x" aria-hidden="true"></i>Inicio</li>
-            <li ng-class="{active: currentPage=='pacientes'}" ng-click="vm.go('pacientes')"><i class="fa fa-users fa-2x" aria-hidden="true"></i>Pacientes</li>
-            <li ng-class="{active: currentPage=='doctores'}" ng-click="vm.go('profesionales')"><i class="fa fa-user-md fa-2x" aria-hidden="true"></i>Profesionales</li>
-            <li ng-click="vm.go('consultas')"><i class="fa fa-tasks fa-2x" aria-hidden="true"></i>Consultas Hoy</li>
+            <li ng-if="sesion=='admin'" ng-class="{active: currentPage=='pacientes'}" ng-click="vm.go('pacientes')"><i class="fa fa-users fa-2x" aria-hidden="true"></i>Pacientes</li>
+            <li ng-if="sesion=='admin'" ng-class="{active: currentPage=='doctores'}" ng-click="vm.go('profesionales')"><i class="fa fa-user-md fa-2x" aria-hidden="true"></i>Profesionales</li>
+            <!--<li ng-if="sesion=='admin' || sesion=='functionary'" ng-click="vm.go('consultas')"><i class="fa fa-tasks fa-2x" aria-hidden="true"></i>Consultas Hoy</li>-->
             <li ng-class="{active: currentPage=='citas_medicas'}" ng-click="vm.go('citas_medicas')"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i>Citas Médicas</li>
-            <li ng-click="vm.go('pacientes')"><i class="fa fa-cog fa-2x" aria-hidden="true"></i>Administración</li>
+            <li ng-class="{active: currentPage=='admin'}" ng-click="vm.go('admin')"><i class="fa fa-cog fa-2x" aria-hidden="true"></i>Administración</li>
           </ul>
         </div>
       </div>
 
-      <div flex="80" layout="row" class="container">
+      <div ng-if="currentPage!='login'" flex-md="80" flex-gt-md="95" flex-gt-lg="90" layout="row" class="container">
         <div flex ng-view layout="row">
+        </div>
+      </div>
+
+      <div ng-if="currentPage=='login'" flex layout="row" class="container">
+        <div flex ng-view layout="row" layout-align="center center">
         </div>
       </div>
 
@@ -72,13 +85,17 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-colorpicker/3.0.25/js/bootstrap-colorpicker-module.min.js"></script>
   <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js"></script>
   <script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
+  <script src="bower_components/angular-material-datetimepicker/js/angular-material-datetimepicker.min.js"></script>
+  <script src="bower_components/angular-cookie/angular-cookie.min.js"></script>
+  <script src="bower_components/ng-token-auth/dist/ng-token-auth.min.js"></script>
+  <script src="bower_components/ng-token-auth/dist/ng-token-auth.min.js"></script>
 
 
   <!--/*<script src="app/build/js/app.js"></script>*/-->
   <script src="app/js/app.js"></script>
   <script src="app/js/routes.js"></script>
-  <script src="app/js/build/controllers.js"></script>
   <script src="app/js/build/services.js"></script>
+  <script src="app/js/build/controllers.js"></script>
   <script src="app/js/helpers.js"></script>
 
 </body>

@@ -1,9 +1,9 @@
 <div class="contenido">
   <div layout="column" class="pasientes">
-    <div flex class="titulo" layout="row">
+    <!--<div flex class="titulo" layout="row">
       <i class="fa fa-users fa-3x" aria-hidden="true"> </i>
       <h1>Pacientes</h1>
-    </div>
+    </div>-->
 
     <div flex class="listado">
       <div layout="column">
@@ -22,6 +22,11 @@
           </md-input-container>
         </div>
         <div class="text-right" flex>
+          <md-button class="md-icon-button" aria-label="Añadir paciente" ng-click="pa.go('citas_medicas')">
+            <md-icon class="fa fa-calendar-plus-o fa-2x"></md-icon>
+            <md-tooltip md-direction="top">Nueva Cita</md-tooltip>
+          </md-button>
+
           <md-button class="md-icon-button" aria-label="Añadir paciente" ng-click="pa.goAdd()">
             <md-icon class="fa fa-user-plus fa-2x"></md-icon>
             <md-tooltip md-direction="top">Registrar nuevo paciente</md-tooltip>

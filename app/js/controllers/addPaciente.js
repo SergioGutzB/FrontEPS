@@ -1,12 +1,13 @@
 var eps = angular.module('Eps');
 eps.controller('PacienteAdd', pacienteAddController);
-pacienteAddController.$inject = ['$scope', 'sData'];
+pacienteAddController.$inject = ['$scope', '$rootScope', 'sData'];
 
-function pacienteAddController($scope, sData) {
+function pacienteAddController($scope, $rootScope, sData) {
   var self = this;
   self.sData = sData;
-  self.icon = 'fa-user-plus';
-  self.title = 'Registrar Paciente';
+
+  $rootScope.pageTitle = 'Registrar Paciente';
+  $rootScope.pageIcon = 'fa-user-plus';
 
   if (self.sData.paciente !== null) {
     self.paciente = self.sData.paciente;

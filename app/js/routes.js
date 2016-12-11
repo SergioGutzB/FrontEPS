@@ -1,8 +1,34 @@
 angular
   .module('Eps')
   .config(appConfig)
-  .run(function($rootScope) {
+  .run(function($rootScope, $auth, $location, moment, eps) {
+
     $rootScope.currentPage = 'inicio';
+    $rootScope.pageTitle = 'Inicio';
+    $rootScope.pageIcon = 'fa-home';
+    $rootScope.user = {};
+    $rootScope.sesion = 'admin';
+    $rootScope.date = moment().format('LL');
+    $rootScope.signOut = function() {
+      $auth.signOut()
+        .then(function(resp) {
+          console.log("signOut");
+          $location.path('/login');
+        })
+        .catch(function(resp) {
+          console.log("No signOut")
+        });
+    };
+    eps.getUser()
+      .then(function(res) {
+        var resp = res.data.users;
+        var pacientes = res.data.users.find(function(user) {
+          return user.type === 'Patient';
+        });
+        console.log(pacientes);
+      })
+
+
   })
 
 function appConfig($routeProvider, $locationProvider) {
@@ -12,16 +38,22 @@ function appConfig($routeProvider, $locationProvider) {
     controllerAs: "vm"
   })
 
+  $routeProvider.when('/login', {
+    templateUrl: '../../views/login.html',
+    controller: 'Login',
+    controllerAs: "lo"
+  })
+
   .when('/pacientes', {
     templateUrl: '../../views/pacientes.html',
     controller: 'Pacientes',
-    controllerAs: "pa"
+    controllerAs: "pa",
   })
 
   .when('/citas_medicas', {
     templateUrl: '../../views/citas.html',
     controller: 'Citas',
-    controllerAs: "vm"
+    controllerAs: "ci"
   })
 
   .when('/addPaciente', {
@@ -48,7 +80,11 @@ function appConfig($routeProvider, $locationProvider) {
     controllerAs: "proAdd"
   })
 
-
+  .when('/admin', {
+    templateUrl: '/views/administracion.html',
+    controller: 'Admin',
+    controllerAs: "ad"
+  })
 
   .otherwise({
     redirectTo: '/'

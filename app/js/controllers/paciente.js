@@ -1,10 +1,14 @@
 var eps = angular.module('Eps');
 eps.controller('Pacientes', pacientesController);
-pacientesController.$inject = ['$scope', '$interval', 'uiGridConstants', '$location', '$mdDialog', 'sData'];
+pacientesController.$inject = ['$scope', '$rootScope', '$interval', 'uiGridConstants', '$location', '$mdDialog', 'sData', 'eps'];
 
-function pacientesController($scope, $interval, uiGridConstants, $location, $mdDialog, sData) {
+function pacientesController($scope, $rootScope, $interval, uiGridConstants, $location, $mdDialog, sData, eps) {
   var self = this;
   self.sData = sData;
+  $rootScope.pageTitle = 'Pacientes';
+  $rootScope.pageIcon = 'fa-users';
+
+
 
   self.showAdvanced = function(ev) {
     if (self.getCurrentSelection())
@@ -42,13 +46,11 @@ function pacientesController($scope, $interval, uiGridConstants, $location, $mdD
       self.gridApi.grid.registerRowsProcessor(self.singleFilter, 200);
     },
     columnDefs: [
-      { field: 'primerNombre' },
-      { field: 'segundoNombre' },
-      { field: 'primerApellido' },
-      { field: 'segundoApellido' },
-      { field: 'documento' },
-      { field: 'fechaNacimiento' },
-      { field: 'estadoCivil' },
+      { field: 'name' },
+      { field: 'last_name' },
+      { field: 'document' },
+      { field: 'birthdate' },
+      { field: 'phone' }
     ]
   };
 
@@ -76,7 +78,8 @@ function pacientesController($scope, $interval, uiGridConstants, $location, $mdD
     var matcher = new RegExp(self.filterValue);
     renderableRows.forEach(function(row) {
       var match = false;
-      ['primerNombre', 'segundoNombre', 'primerApellido', 'segundoApellido', 'documento'].forEach(function(field) {
+      ['document'].forEach(function(field) {
+        console.log(row.entity[field]);
         if (row.entity[field].match(matcher)) {
           match = true;
         }
@@ -106,7 +109,13 @@ function pacientesController($scope, $interval, uiGridConstants, $location, $mdD
     $location.path('/addPaciente');
   };
 
-  self.gridOptions.data = sData.pacientes;
+  eps.getUser()
+    .then(function(res) {
+      self.gridOptions.data = res.data.users.filter(function(user) {
+        return user.type === 'Patient';
+      });
+    })
+
   $interval(function() {
     self.gridApi.selection.selectRow(self.gridOptions.data[0]);
     self.gridApi.selection.clearSelectedRows();

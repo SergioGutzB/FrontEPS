@@ -2,6 +2,8 @@ angular
   .module('ServeData', [])
   .service('sData', [function() {
     return {
+      pageTitle: '',
+      pageIcon: '',
       paciente: null,
       profesional: null,
       especialidades: ['psi', 'fono', 'teo'],

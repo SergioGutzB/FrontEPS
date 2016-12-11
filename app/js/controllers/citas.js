@@ -1,21 +1,27 @@
 var eps = angular.module('Eps');
 eps.controller('Citas', CitasController);
-CitasController.$inject = ['moment', 'alert', 'calendarConfig', '$scope', '$window', '$ocLazyLoad'];
+CitasController.$inject = ['$mdToast', '$auth', 'moment', '$rootScope', 'alert', 'calendarConfig', '$scope', '$window', '$ocLazyLoad', 'sData'];
 
-function CitasController(moment, alert, calendarConfig, $scope, $window, $ocLazyLoad) {
-  var vm = this;
+function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarConfig, $scope, $window, $ocLazyLoad, sData) {
+  var self = this;
 
-  $scope.$on('$destroy', function() {
-    moment.locale('en');
-    calendarConfig.i18nStrings = originali18n;
-  });
+  self.sData = sData;
+  self.cita = {};
+  $rootScope.currentPage = 'citas_medicas';
+  $rootScope.pageTitle = 'Citas Médicas';
+  $rootScope.pageIcon = 'fa-calendar';
 
+
+  self.openToast = function($event) {
+    $mdToast.show($mdToast.simple().textContent('Hello!'));
+    // Could also do $mdToast.showSimple('Hello');
+  };
   //These variables MUST be set as a minimum for the calendar to work
-  vm.calendarView = 'week';
-  vm.viewDate = new Date();
-  vm.rangeSelected = function(startDate, endDate) {
-    vm.firstDateClicked = startDate;
-    vm.lastDateClicked = endDate;
+  self.calendarView = 'week';
+  self.viewDate = new Date();
+  self.rangeSelected = function(startDate, endDate) {
+    self.firstDateClicked = startDate;
+    self.lastDateClicked = endDate;
   };
 
   calendarConfig.dateFormatter = 'moment'; // use moment instead of angular for formatting dates
@@ -48,7 +54,7 @@ function CitasController(moment, alert, calendarConfig, $scope, $window, $ocLazy
       alert.show('Deleted', args.calendarEvent);
     }
   }];
-  vm.events = [{
+  self.events = [{
     title: 'Paciente 1',
     color: calendarConfig.colorTypes.warning,
     startsAt: moment().startOf('day').add(7, 'hours').toDate(),
@@ -75,57 +81,65 @@ function CitasController(moment, alert, calendarConfig, $scope, $window, $ocLazy
     actions: actions
   }];
 
-  vm.cellIsOpen = true;
+  self.cellIsOpen = true;
 
-  vm.addEvent = function() {
-    vm.events.push({
-      title: 'New event',
-      startsAt: moment().startOf('day').toDate(),
-      endsAt: moment().endOf('day').toDate(),
+  self.add = function() {
+    console.log(self.cita);
+    self.events.push({
+      title: self.sData.paciente.primerNombre + " " + self.sData.paciente.primerApellido,
+      startsAt: self.cita.startsAt,
+      endsAt: self.cita.endsAt,
       color: calendarConfig.colorTypes.important,
       draggable: true,
-      resizable: true
     });
-  };
+    self.openToast("Cita médica guardada con éxito");
+    self.cita = {};
+  }
 
-  vm.eventClicked = function(event) {
+  $scope.$watch(function() {
+    return self.cita.startsAt;
+  }, function() {
+    self.cita.endsAt = self.cita.startsAt;
+  });
+
+  self.eventClicked = function(event) {
     alert.show('Clicked', event);
   };
 
-  vm.eventEdited = function(event) {
+  self.eventEdited = function(event) {
     alert.show('Edited', event);
   };
 
-  vm.eventDeleted = function(event) {
+  self.eventDeleted = function(event) {
     console.log("Deleted");
     alert.show('Deleted ju', event);
   };
 
-  vm.eventTimesChanged = function(event) {
+  self.eventTimesChanged = function(event) {
     alert.show('Dropped or resized', event);
   };
 
-  vm.toggle = function($event, field, event) {
+  self.toggle = function($event, field, event) {
     $event.preventDefault();
     $event.stopPropagation();
     event[field] = !event[field];
   };
 
-  vm.timespanClicked = function(date, cell) {
+  self.timespanClicked = function(date, cell) {
 
-    if (vm.calendarView === 'month') {
-      if ((vm.cellIsOpen && moment(date).startOf('day').isSame(moment(vm.viewDate).startOf('day'))) || cell.events.length === 0 || !cell.inMonth) {
-        vm.cellIsOpen = false;
+    if (self.calendarView === 'month') {
+      if ((self.cellIsOpen && moment(date).startOf('day').isSame(moment(self.viewDate).startOf('day'))) || cell.events.length === 0 || !cell.inMonth) {
+        self.cellIsOpen = false;
       } else {
-        vm.cellIsOpen = true;
-        vm.viewDate = date;
+        self.cellIsOpen = true;
+        self.viewDate = date;
       }
-    } else if (vm.calendarView === 'year') {
-      if ((vm.cellIsOpen && moment(date).startOf('month').isSame(moment(vm.viewDate).startOf('month'))) || cell.events.length === 0) {
-        vm.cellIsOpen = false;
+    } else if (self.calendarView === 'year') {
+      if ((self.cellIsOpen && moment(date).startOf('month').isSame(moment(self.viewDate).startOf('month'))) || cell.events.length === 0) {
+        self.cellIsOpen = false;
       } else {
-        vm.cellIsOpen = true;
-        vm.viewDate = date;
+        self.cellIsOpen = true;
+        self.viewDate = date;
       }
     }
 

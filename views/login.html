@@ -1,0 +1,17 @@
+<div flex="20" md-theme="eps-green">
+  <form ng-submit="lo.submitLogin(loginForm)" role="form" ng-init="lo.loginForm = {}">
+
+    <div layout-gt-gs="row">
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Usuario</label>
+        <input type="email" name="email" ng-model="lo.loginForm.email" required="required" class="form-control">
+      </md-input-container>
+
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Email</label>
+        <input type="password" name="password" ng-model="lo.loginForm.password" type="email" required="required" class="form-control">
+      </md-input-container>
+    </div>
+    <md-button type="submit" class="md-primary md-raised md-hue-2">Sign in</md-button>
+  </form>
+</div>

@@ -10,9 +10,10 @@ var eps = angular.module('Eps', [
   'mwl.calendar',
   'ui.bootstrap',
   'colorpicker.module',
-  'oc.lazyLoad'
-
-
+  'oc.lazyLoad',
+  'ngMaterialDatePicker',
+  'ng-token-auth',
+  'EpsService',
 ]);
 
 eps.config(function($mdThemingProvider) {
@@ -25,7 +26,6 @@ eps.config(function($mdThemingProvider) {
     })
     .warnPalette('red')
     .accentPalette('orange');
-
 });
 
 eps.config(['calendarConfig', function(calendarConfig) {
@@ -33,3 +33,13 @@ eps.config(['calendarConfig', function(calendarConfig) {
   calendarConfig.dateFormatter = 'moment'; // use moment to format dates
   calendarConfig.allDateFormats.moment.date.hour = 'HH:mm';
 }]);
+
+eps.config(function($authProvider) {
+  $authProvider.configure({
+    apiUrl: 'http://35.163.238.128:3000/api/v1',
+    handleLoginResponse: function(response) {
+      console.log(response.data);
+      return response.data;
+    },
+  });
+});

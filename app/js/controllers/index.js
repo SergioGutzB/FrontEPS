@@ -1,13 +1,25 @@
 var eps = angular.module('Eps');
-eps.controller('Index', indexCotroller);
-indexCotroller.$inject = ['$rootScope', '$location'];
+eps.controller('Index', indexController);
+indexController.$inject = ['$rootScope', '$location', '$auth'];
 
-function indexCotroller($rootScope, $location) {
-  this.close = function() {
+function indexController($rootScope, $location, $auth) {
+
+  var self = this;
+  self.close = function() {
     console.log("close");
   };
+  // $auth.authenticate()
+  //   .then(function() {})
+  //   .catch(function(resp) {
+  //     $location.path('/login');
+  //   });
+
+
+
+  $rootScope.pageTitle = 'Inicio';
+  $rootScope.pageIcon = 'fa-home';
   $rootScope.currentPage = $location.path().split('/')[1];
-  this.go = function(url) {
+  self.go = function(url) {
     $rootScope.currentPage = url;
     $location.path('/' + url);
     if (url === '')
