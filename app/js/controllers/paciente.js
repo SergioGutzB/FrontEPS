@@ -64,6 +64,8 @@ function pacientesController($scope, $rootScope, $interval, uiGridConstants, $lo
 
   self.getCurrentSelection = function() {
     self.sData.patient = self.gridApi.selection.getSelectedRows()[0];
+    console.log("selecionado");
+    console.log(self.sData.patient);
     if (self.sData.patient !== undefined)
       return true;
     else return false;

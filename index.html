@@ -45,11 +45,11 @@
         <div class="menu">
           <ul>
             <li ng-class="{active: currentPage=='inicio'}" ng-click="vm.go('')"><i class="fa fa-home fa-2x" aria-hidden="true"></i>Inicio</li>
-            <li ng-if="sesion=='admin'" ng-class="{active: currentPage=='pacientes'}" ng-click="vm.go('pacientes')"><i class="fa fa-users fa-2x" aria-hidden="true"></i>Pacientes</li>
-            <li ng-if="sesion=='admin'" ng-class="{active: currentPage=='doctores'}" ng-click="vm.go('profesionales')"><i class="fa fa-user-md fa-2x" aria-hidden="true"></i>Profesionales</li>
+            <li ng-class="{active: currentPage=='pacientes'}" ng-click="vm.go('pacientes')"><i class="fa fa-users fa-2x" aria-hidden="true"></i>Pacientes</li>
+            <li ng-if="sesion!='Patient'" ng-class="{active: currentPage=='doctores'}" ng-click="vm.go('profesionales')"><i class="fa fa-user-md fa-2x" aria-hidden="true"></i>Profesionales</li>
             <!--<li ng-if="sesion=='admin' || sesion=='functionary'" ng-click="vm.go('consultas')"><i class="fa fa-tasks fa-2x" aria-hidden="true"></i>Consultas Hoy</li>-->
             <li ng-class="{active: currentPage=='citas_medicas'}" ng-click="vm.go('citas_medicas')"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i>Citas Médicas</li>
-            <li ng-class="{active: currentPage=='admin'}" ng-click="vm.go('admin')"><i class="fa fa-cog fa-2x" aria-hidden="true"></i>Administración</li>
+            <li ng-if="sesion=='Admin'" ng-class="{active: currentPage=='admin'}" ng-click="vm.go('admin')"><i class="fa fa-cog fa-2x" aria-hidden="true"></i>Administración</li>
           </ul>
         </div>
       </div>

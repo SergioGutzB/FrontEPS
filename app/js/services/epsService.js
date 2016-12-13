@@ -51,7 +51,7 @@ angular
       getProfesional: function(id) {
         global = $http({
           method: 'GET',
-          url: 'http://35.163.238.128:3000/api/v1/doctors/:' + id,
+          url: 'http://35.163.238.128:3000/api/v1/doctors/' + id,
         });
         return global;
       },

@@ -89,16 +89,20 @@ function profesionalesController($scope, $rootScope, $interval, uiGridConstants,
     $location.path('/addProfesional');
   };
 
-  // eps.getProfesionales()
-  //   .then(function(res) {
-  //     console.log(res);
-  //     var data = res.data.doctors.map(function(element, index) {
-  //       return $.extend(element, res.data.users[index]);
-  //     });
-  //   }, function(error) {
-  //     console.log("error..");
-  //     console.log(error);
-  //   });
+  eps.getProfesionales()
+    .then(function(res) {
+      console.log(res);
+    }, function(error) {
+      console.log("error..");
+      console.log(error);
+    });
+
+  eps.getProfesional(1)
+    .then(function(response) {
+      console.log(response);
+    }, function(error) {
+      console.log(error);
+    });
 
   self.gridOptions.data = self.sData.profesionales;
 

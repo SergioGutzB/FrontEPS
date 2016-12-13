@@ -37,15 +37,15 @@ eps.config(function($authProvider) {
   $authProvider.configure({
     apiUrl: 'http://35.163.238.128:3000/api/v1',
     handleLoginResponse: function(response) {
-      console.log(response.data);
-      return response.data;
+      console.log(response);
+      return response;
     },
   });
 });
 
 eps.constant('CONFIG', {
   TEMPLATE_DIR: "/views/",
-  ROL_CURRENT_USER: 3
+  ROL_CURRENT_USER: 1
 })
 
 .constant('ROLES', {
@@ -63,6 +63,10 @@ eps.constant('CONFIG', {
   },
   PROFESIONAL: {
     ROL: 3,
+    PATH: "/citas_medicas"
+  },
+  FUNTIONARY: {
+    ROL: 4,
     PATH: "/citas_medicas"
   }
 })

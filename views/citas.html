@@ -2,27 +2,43 @@
   <div layout="column" class="pasientes" md-theme="eps-green">
     <div flex class="titulo" layout="row">
       <i class="fa fa-calendar-plus-o fa-3x" aria-hidden="true"> </i>
-      <h1>Nueva Cíta {{rol}}</h1>
+      <h1>Nueva Cíta</h1>
     </div>
-    <form ng-if="rol == 1">
+    <div ng-if="ci.patient">
+      <br/>
+      <h3>Paciente</h3>
+      <br/>
+      <br/>
+      <div layout-gt-xs="row">
+        <md-input-container class="md-block" flex-gt-xs>
+          <label>Nombres</label>
+          <input ng-model="ci.patient.name" disabled>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-xs>
+          <label>Apellidos</label>
+          <input ng-model="ci.patient.last_name" disabled>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-xs>
+          <label>Documento</label>
+          <input ng-model="ci.patient.document" disabled>
+        </md-input-container>
+      </div>
+    </div>
+    <form ng-if="ci.patient">
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>
           <label>Especialidad</label>
-          <md-select name="especialidad" ng-model="ci.especialidad" required>
-            <md-option><em>None</em></md-option>
-            <md-option value="psi">Psicología</md-option>
-            <md-option value="fono">Fono-Audiología</md-option>
-            <md-option value="teo">Terapia ocupacional</md-option>
+          <md-select name="speciality" ng-model="ci.cita.speciality" required>
+            <md-option value="psicologo">Psicología</md-option>
+            <md-option value="fonoaudiologo">Fono-Audiología</md-option>
+            <md-option value="terapeuta_ocupacional">Terapia ocupacional</md-option>
           </md-select>
         </md-input-container>
 
         <md-input-container class="md-block" flex-gt-sm>
           <label>Profesional</label>
-          <md-select name="profesional" ng-model="ci.profesional" required>
-            <md-option><em>None</em></md-option>
-            <md-option value="psi">Psicología</md-option>
-            <md-option value="fono">Fono-Audiología</md-option>
-            <md-option value="teo">Terapia ocupacional</md-option>
+          <md-select name="profesional" ng-model="ci.cita.profesional" required>
+            <md-option ng-repeat="pro in ci.profesionals" ng-value="pro.id">{{pro.user.name}} {{pro.user.last_name}}</md-option>
           </md-select>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm layout-align="end center">
@@ -80,7 +96,7 @@
 
     <br>
 
-    <mwl-calendar events="ci.events" view="ci.calendarView" view-title="ci.calendarTitle" view-date="ci.viewDate" on-event-click="ci.eventClicked(calendarEvent)" on-event-times-changed="ci.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+    <mwl-calendar events="ci.cites" view="ci.calendarView" view-title="ci.calendarTitle" view-date="ci.viewDate" on-event-click="ci.eventClicked(calendarEvent)" on-event-times-changed="ci.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
       cell-is-open="ci.cellIsOpen" day-view-start="07:00" day-view-end="17:00" day-view-split="30" cell-modifier="ci.modifyCell(calendarCell)" cell-auto-open-disabled="true" on-timespan-click="ci.timespanClicked(calendarDate, calendarCell)">
     </mwl-calendar>
 

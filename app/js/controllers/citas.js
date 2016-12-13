@@ -11,26 +11,50 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
   $rootScope.pageTitle = 'Citas Médicas';
   $rootScope.pageIcon = 'fa-calendar';
 
-  var cita = {
-    patient_id: 2,
-    doctor_id: 1,
-    date_cite: "2016-12-14 10:00",
-    authorized: true
+  var load_cites = function() {
+    eps.getCites()
+      .then(function(response) {
+        console.log("citas...");
+        console.log(response);
+        console.log(self.patient.id);
+        self.cites = response.data.cites.filter(function(cite) {
+          return cite.patient.id === self.patient.id;
+        });
+        console.log(self.cites);
+        self.cites = self.cites.map(function(cite) {
+          return $.extend(cite, {
+            title: 'valoracion',
+            color: calendarConfig.colorTypes.warning,
+            startsAt: moment(cite.date_cite),
+            endsAt: moment(cite.date_cite),
+          });
+        });
+        console.log(self.cites);
+      }, function(error) {
+        console.log(error);
+        self.cites = {};
+      });
   }
-  eps.addCite(cita)
-    .then(function(response) {
-      console.log(response);
-    }, function(error) {
-      console.log(error);
-    });
 
-  eps.getCites()
-    .then(function(response) {
-      console.log(response);
-    }, function(error) {
-      console.log(error);
-    });
+  if (self.sData.patient !== null) {
+    self.patient = self.sData.patient;
+    load_cites();
+  }
 
+
+
+
+
+  $scope.$watch(function() {
+    return self.cita.speciality;
+  }, function() {
+    eps.getProfesionales()
+      .then(function(response) {
+        self.profesionals = response.data.doctors.filter(function(doctor) {
+          return doctor.speciality === self.cita.speciality;
+        });
+      })
+  });
 
   self.openToast = function($event) {
     $mdToast.show($mdToast.simple().textContent('Hello!'));
@@ -74,46 +98,44 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
       alert.show('Deleted', args.calendarEvent);
     }
   }];
-  self.events = [{
-    title: 'Paciente 1',
-    color: calendarConfig.colorTypes.warning,
-    startsAt: moment().startOf('day').add(7, 'hours').toDate(),
-    endsAt: moment().startOf('day').add(7.5, 'hours').toDate(),
-    draggable: true,
-    resizable: true,
-    actions: actions
-  }, {
-    title: 'Paciente 2',
-    color: calendarConfig.colorTypes.info,
-    startsAt: moment().startOf('day').add(7.5, 'hours').toDate(),
-    endsAt: moment().startOf('day').add(8, 'hours').toDate(),
-    draggable: true,
-    resizable: true,
-    actions: actions
-  }, {
-    title: 'Paciente 3',
-    color: calendarConfig.colorTypes.important,
-    startsAt: moment().startOf('day').add(8, 'hours').toDate(),
-    endsAt: moment().startOf('day').add(9, 'hours').toDate(),
-    recursOn: 'year',
-    draggable: true,
-    resizable: true,
-    actions: actions
-  }];
+  // self.events = [{
+  //   title: 'Paciente 1',
+  //   color: calendarConfig.colorTypes.warning,
+  //   startsAt: moment().startOf('day').add(7, 'hours').toDate(),
+  //   endsAt: moment().startOf('day').add(7.5, 'hours').toDate(),
+  //   draggable: true,
+  //   resizable: true,
+  //   actions: actions
+  // }, {
+  //   title: 'Paciente 2',
+  //   color: calendarConfig.colorTypes.info,
+  //   startsAt: moment().startOf('day').add(7.5, 'hours').toDate(),
+  //   endsAt: moment().startOf('day').add(8, 'hours').toDate(),
+  //   draggable: true,
+  //   resizable: true,
+  //   actions: actions
+  // }, {
+  //   title: 'Paciente 3',
+  //   color: calendarConfig.colorTypes.important,
+  //   startsAt: moment().startOf('day').add(8, 'hours').toDate(),
+  //   endsAt: moment().startOf('day').add(9, 'hours').toDate(),
+  //   recursOn: 'year',
+  //   draggable: true,
+  //   resizable: true,
+  //   actions: actions
+  // }];
 
   self.cellIsOpen = true;
 
   self.add = function() {
     console.log(self.cita);
-    self.events.push({
-      title: self.sData.paciente.primerNombre + " " + self.sData.paciente.primerApellido,
-      startsAt: self.cita.startsAt,
-      endsAt: self.cita.endsAt,
-      color: calendarConfig.colorTypes.important,
-      draggable: true,
-    });
-    self.openToast("Cita médica guardada con éxito");
-    self.cita = {};
+    eps.addCite(self.cita)
+      .then(function(response) {
+        load_cites();
+        self.openToast("Cita médica guardada con éxito");
+        self.cita = {};
+      }, function(error) {})
+
   };
 
   $scope.$watch(function() {
