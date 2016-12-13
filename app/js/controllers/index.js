@@ -8,11 +8,6 @@ function indexController($rootScope, $location, $auth) {
   self.close = function() {
     console.log("close");
   };
-  // $auth.authenticate()
-  //   .then(function() {})
-  //   .catch(function(resp) {
-  //     $location.path('/login');
-  //   });
 
 
 

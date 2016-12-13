@@ -27,11 +27,11 @@ function profesionalesController($scope, $rootScope, $interval, uiGridConstants,
       self.gridApi.grid.registerRowsProcessor(self.singleFilter, 200);
     },
     columnDefs: [
-      { field: 'primerNombre' },
-      { field: 'primerApellido' },
-      { field: 'segundoApellido' },
-      { field: 'documento' },
-      { field: 'especialidad' },
+      { field: 'name' },
+      { field: 'last_name' },
+      { field: 'document' },
+      { field: 'birthdate' },
+      { field: 'speciality' },
       { field: 'consultorio' },
     ]
   };
@@ -45,10 +45,9 @@ function profesionalesController($scope, $rootScope, $interval, uiGridConstants,
 
   self.getCurrentSelection = function() {
     self.sData.profesional = self.gridApi.selection.getSelectedRows()[0];
-    if (self.sData.profesional != undefined)
+    if (self.sData.profesional !== undefined)
       return true;
     else return false;
-
   };
 
   self.filter = function() {
@@ -60,7 +59,7 @@ function profesionalesController($scope, $rootScope, $interval, uiGridConstants,
     var matcher = new RegExp(self.filterValue);
     renderableRows.forEach(function(row) {
       var match = false;
-      ['primerNombre', 'primerApellido', 'segundoApellido', 'documento', 'especialidad'].forEach(function(field) {
+      ['name', 'last_name', 'document', 'speciality'].forEach(function(field) {
         if (row.entity[field].match(matcher)) {
           match = true;
         }
@@ -90,14 +89,16 @@ function profesionalesController($scope, $rootScope, $interval, uiGridConstants,
     $location.path('/addProfesional');
   };
 
-  eps.getProfesionales()
-    .then(function(res) {
-      console.log("proseionales..");
-      console.log(res.data);
-    }, function(error) {
-      console.log("error..");
-      console.log(error);
-    })
+  // eps.getProfesionales()
+  //   .then(function(res) {
+  //     console.log(res);
+  //     var data = res.data.doctors.map(function(element, index) {
+  //       return $.extend(element, res.data.users[index]);
+  //     });
+  //   }, function(error) {
+  //     console.log("error..");
+  //     console.log(error);
+  //   });
 
   self.gridOptions.data = self.sData.profesionales;
 

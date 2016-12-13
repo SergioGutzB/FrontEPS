@@ -2,9 +2,9 @@
   <div layout="column" class="pasientes" md-theme="eps-green">
     <div flex class="titulo" layout="row">
       <i class="fa fa-calendar-plus-o fa-3x" aria-hidden="true"> </i>
-      <h1>Nueva Cíta</h1>
+      <h1>Nueva Cíta {{rol}}</h1>
     </div>
-    <form>
+    <form ng-if="rol == 1">
       <div layout-gt-sm="row">
         <md-input-container class="md-block" flex-gt-sm>
           <label>Especialidad</label>

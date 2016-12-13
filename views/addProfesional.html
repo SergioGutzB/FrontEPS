@@ -6,74 +6,87 @@
     </div>
     <hr>
     <div>
-      <form name="profesionalAdd" md-theme="eps-green">
-
+      <form name="profesionalAdd" md-theme="eps-green" novalidate>
+        <h5 class="subtitle">INFORMACIÓN BÁSICA</h5>
         <div layout-gt-xs="row">
           <md-input-container class="md-block" flex-gt-xs>
-            <label>Primer nombre</label>
-            <input ng-model="proAdd.profesional.primerNombre" name="primerNombre" required>
-            <div ng-messages="profesionalAdd.primerNombre.$error">
+            <label>Nombres</label>
+            <input ng-model="proAdd.profesional.name" name="name" required>
+            <div ng-messages="profesionalAdd.name.$error">
               <div ng-message="required">Este campo es requerido.</div>
             </div>
           </md-input-container>
 
-          <md-input-container class="md-block" flex-gt-xs>
+          <!--<md-input-container class="md-block" flex-gt-xs>
             <label>Segundo nombre</label>
             <input ng-model="proAdd.profesional.segundoNombre" name="segundoNombre" required>
             <div ng-messages="profesionalAdd.segundoNombre.$error">
               <div ng-message="required">Este campo es requerido.</div>
             </div>
-          </md-input-container>
+          </md-input-container>-->
 
           <md-input-container class="md-block" flex-gt-xs>
-            <label>Primer apellido</label>
-            <input ng-model="proAdd.profesional.primerApellido" name="primerApellido" required>
-            <div ng-messages="profesionalAdd.primerApellido.$error">
+            <label>Apellidos</label>
+            <input ng-model="proAdd.profesional.last_name" name="last_name" required>
+            <div ng-messages="profesionalAdd.last_name.$error">
               <div ng-message="required">Este campo es requerido.</div>
             </div>
           </md-input-container>
 
           <md-input-container class="md-block" flex-gt-xs>
+            <label>E-mail</label>
+            <input ng-model="proAdd.profesional.email" name="email" type="email" required>
+            <div ng-messages="profesionalAdd.email.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+            </div>
+          </md-input-container>
+
+          <!--<md-input-container class="md-block" flex-gt-xs>
             <label>Segundo apellido</label>
             <input ng-model="proAdd.profesional.segundoApellido" name="segundoApellido" required>
             <div ng-messages="profesionalAdd.segundoApellido.$error">
               <div ng-message="required">Este campo es requerido.</div>
             </div>
-          </md-input-container>
+          </md-input-container>-->
         </div>
 
         <div layout-gt-xs="row">
           <md-input-container class="md-block" flex-gt-xs>
             <label>Documento</label>
-            <input ng-model="proAdd.profesional.documento" required>
+            <input ng-model="proAdd.profesional.document" required>
           </md-input-container>
 
           <md-input-container class="md-block" flex-gt-xs>
             <label>Fecha de nacimiento</label>
-            <md-datepicker ng-model="proAdd.profesional.fechaNacimiento" value="{{proAdd.profesional.fechaNacimiento}}" required></md-datepicker>
+            <md-datepicker ng-model="proAdd.profesional.birthdate" value="{{proAdd.profesional.birthdate}}" required></md-datepicker>
           </md-input-container>
 
           <md-input-container class="md-block" flex-gt-xs>
             <label>Sexo</label>
-            <md-select name="sexo" ng-model="proAdd.profesional.sexo" required>
+            <md-select name="gender" ng-model="proAdd.profesional.gender" required>
               <md-option value="F">Femenino</md-option>
               <md-option value="M">Masculino</md-option>
             </md-select>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Celular</label>
+            <input ng-model="proAdd.profesional.phone" required>
           </md-input-container>
         </div>
 
         <div layout-gt-xs="row">
           <md-input-container class="md-block" flex-gt-xs>
-            <label>Celular</label>
-            <input ng-model="proAdd.profesional.celular" required>
+            <label>Tarjeta Profesional</label>
+            <input ng-model="proAdd.profesional.medical_license" required>
           </md-input-container>
 
           <md-input-container class="md-block" flex-gt-xs>
             <label>Especialidad</label>
-            <md-select name="especialidad" ng-model="proAdd.profesional.especialidad" required>
-              <md-option value="psi">Psicología</md-option>
-              <md-option value="fono">Fono-Audiología</md-option>
-              <md-option value="teo">Terapia ocupacional</md-option>
+            <md-select name="speciality" ng-model="proAdd.profesional.speciality" required>
+              <md-option value="psicologo">Psicología</md-option>
+              <md-option value="fonoaudiologo">Fono-Audiología</md-option>
+              <md-option value="terapeuta_ocupacional">Terapia ocupacional</md-option>
             </md-select>
           </md-input-container>
 
@@ -81,12 +94,33 @@
             <label>Consultorio</label>
             <input ng-model="proAdd.profesional.consultorio" type="number" required>
           </md-input-container>
+        </div>
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Días laborales</label>
+            <md-select ng-model="proAdd.profesional.worked_days" multiple>
+              <md-optgroup label="Dias laborales">
+                <md-option ng-value="dia" ng-repeat="dia in proAdd.dias">{{dia}}</md-option>
+              </md-optgroup>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Hora Fnicio</label>
+            <input mdc-datetime-picker="Hora inicio" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="proAdd.profesional.startsAt" class=" md-input">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Hora Fin</label>
+            <input mdc-datetime-picker="Hora fin" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="proAdd.profesional.endsAt" class=" md-input">
+          </md-input-container>
+
 
 
         </div>
 
         <div layout-gt-xs="row">
-          <md-button type="submit" class="md-primary md-raised md-hue-2">Guardar</md-button>
+          <md-button ng-click="proAdd.save(profesionalAdd)" class="md-primary md-raised md-hue-2">Guardar</md-button>
         </div>
 
 

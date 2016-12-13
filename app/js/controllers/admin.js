@@ -5,7 +5,7 @@ adminController.$inject = ['$scope', '$rootScope', 'sData', '$location', 'eps'];
 function adminController($scope, $rootScope, sData, $location, eps) {
   var self = this;
   self.sData = sData;
-  $rootScope.currenPage = 'admin'
+  $rootScope.currenPage = 'admin';
   $rootScope.pageTitle = 'Añadir Especialidad';
   $rootScope.pageIcon = 'fa-cog';
 
@@ -13,10 +13,7 @@ function adminController($scope, $rootScope, sData, $location, eps) {
     if (self.especialidad)
       eps.addEspecialidad({ name: self.especialidad })
       .then(function(res) {
-        console.log(res)
-      })
-
-  }
-
-
+        console.log(res);
+      });
+  };
 }

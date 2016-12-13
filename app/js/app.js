@@ -29,7 +29,6 @@ eps.config(function($mdThemingProvider) {
 });
 
 eps.config(['calendarConfig', function(calendarConfig) {
-  console.log(calendarConfig); //view all available config
   calendarConfig.dateFormatter = 'moment'; // use moment to format dates
   calendarConfig.allDateFormats.moment.date.hour = 'HH:mm';
 }]);
@@ -43,3 +42,27 @@ eps.config(function($authProvider) {
     },
   });
 });
+
+eps.constant('CONFIG', {
+  TEMPLATE_DIR: "/views/",
+  ROL_CURRENT_USER: 3
+})
+
+.constant('ROLES', {
+  ANONYMOUS: {
+    ROL: 0,
+    PATH: "/login"
+  },
+  ADMIN: {
+    ROL: 1,
+    PATH: "/citas_medicas"
+  },
+  PATIENT: {
+    ROL: 2,
+    PATH: "/pacientes"
+  },
+  PROFESIONAL: {
+    ROL: 3,
+    PATH: "/citas_medicas"
+  }
+})

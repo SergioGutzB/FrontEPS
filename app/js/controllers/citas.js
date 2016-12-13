@@ -1,8 +1,8 @@
 var eps = angular.module('Eps');
 eps.controller('Citas', CitasController);
-CitasController.$inject = ['$mdToast', '$auth', 'moment', '$rootScope', 'alert', 'calendarConfig', '$scope', '$window', '$ocLazyLoad', 'sData'];
+CitasController.$inject = ['$mdToast', '$auth', 'moment', '$rootScope', 'alert', 'calendarConfig', '$scope', '$window', '$ocLazyLoad', 'sData', 'eps'];
 
-function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarConfig, $scope, $window, $ocLazyLoad, sData) {
+function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarConfig, $scope, $window, $ocLazyLoad, sData, eps) {
   var self = this;
 
   self.sData = sData;
@@ -10,6 +10,26 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
   $rootScope.currentPage = 'citas_medicas';
   $rootScope.pageTitle = 'Citas Médicas';
   $rootScope.pageIcon = 'fa-calendar';
+
+  var cita = {
+    patient_id: 2,
+    doctor_id: 1,
+    date_cite: "2016-12-14 10:00",
+    authorized: true
+  }
+  eps.addCite(cita)
+    .then(function(response) {
+      console.log(response);
+    }, function(error) {
+      console.log(error);
+    });
+
+  eps.getCites()
+    .then(function(response) {
+      console.log(response);
+    }, function(error) {
+      console.log(error);
+    });
 
 
   self.openToast = function($event) {
@@ -94,7 +114,7 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
     });
     self.openToast("Cita médica guardada con éxito");
     self.cita = {};
-  }
+  };
 
   $scope.$watch(function() {
     return self.cita.startsAt;

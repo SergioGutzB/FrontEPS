@@ -46,6 +46,7 @@ function pacientesController($scope, $rootScope, $interval, uiGridConstants, $lo
       self.gridApi.grid.registerRowsProcessor(self.singleFilter, 200);
     },
     columnDefs: [
+      { field: 'id' },
       { field: 'name' },
       { field: 'last_name' },
       { field: 'document' },
@@ -55,16 +56,15 @@ function pacientesController($scope, $rootScope, $interval, uiGridConstants, $lo
   };
 
   self.toggleRowSelection = function() {
-    self.sData.paciente = null;
+    self.sData.patient = null;
     self.gridApi.selection.clearSelectedRows();
     self.gridOptions.enableRowSelection = !self.gridOptions.enableRowSelection;
     self.gridApi.core.notifyDataChange(uiGridConstants.dataChange.OPTIONS);
   };
 
   self.getCurrentSelection = function() {
-    self.sData.paciente = self.gridApi.selection.getSelectedRows()[0];
-    console.log(self.sData.paciente);
-    if (self.sData.paciente != undefined)
+    self.sData.patient = self.gridApi.selection.getSelectedRows()[0];
+    if (self.sData.patient !== undefined)
       return true;
     else return false;
 
@@ -78,8 +78,7 @@ function pacientesController($scope, $rootScope, $interval, uiGridConstants, $lo
     var matcher = new RegExp(self.filterValue);
     renderableRows.forEach(function(row) {
       var match = false;
-      ['document'].forEach(function(field) {
-        console.log(row.entity[field]);
+      ['document', 'name', 'last_name'].forEach(function(field) {
         if (row.entity[field].match(matcher)) {
           match = true;
         }
@@ -105,16 +104,22 @@ function pacientesController($scope, $rootScope, $interval, uiGridConstants, $lo
   };
 
   self.goAdd = function(url) {
-    self.sData.paciente = null;
+    self.sData.patient = null;
     $location.path('/addPaciente');
   };
 
-  eps.getUser()
+  eps.getUser(2)
+    .then(function(res) {
+      console.log("usuario id:");
+      console.log(res);
+    });
+  eps.getUsers()
     .then(function(res) {
       self.gridOptions.data = res.data.users.filter(function(user) {
         return user.type === 'Patient';
       });
-    })
+      console.log(self.gridOptions.data)
+    });
 
   $interval(function() {
     self.gridApi.selection.selectRow(self.gridOptions.data[0]);

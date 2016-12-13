@@ -1,89 +1,87 @@
 angular
   .module('Eps')
   .config(appConfig)
-  .run(function($rootScope, $auth, $location, moment, eps) {
 
-    $rootScope.currentPage = 'inicio';
-    $rootScope.pageTitle = 'Inicio';
-    $rootScope.pageIcon = 'fa-home';
-    $rootScope.user = {};
-    $rootScope.sesion = 'admin';
-    $rootScope.date = moment().format('LL');
-    $rootScope.signOut = function() {
-      $auth.signOut()
-        .then(function(resp) {
-          console.log("signOut");
-          $location.path('/login');
-        })
-        .catch(function(resp) {
-          console.log("No signOut")
-        });
-    };
-    eps.getUser()
-      .then(function(res) {
-        var resp = res.data.users;
-        var pacientes = res.data.users.find(function(user) {
-          return user.type === 'Patient';
-        });
-        console.log(pacientes);
-      })
-
-
-  })
-
-function appConfig($routeProvider, $locationProvider) {
+function appConfig($routeProvider, $locationProvider, CONFIG, ROLES) {
   $routeProvider.when('/', {
-    templateUrl: '../../views/dashboard.html',
+    templateUrl: CONFIG.TEMPLATE_DIR + 'dashboard.html',
     controller: 'DashBoard',
-    controllerAs: "vm"
+    controllerAs: "vm",
+    data: {
+      authorized: [ROLES.ADMIN.ROL, ROLES.PATIENT.ROL, ROLES.PROFESIONAL.ROL]
+    }
   })
 
   $routeProvider.when('/login', {
-    templateUrl: '../../views/login.html',
+    templateUrl: CONFIG.TEMPLATE_DIR + 'login.html',
     controller: 'Login',
-    controllerAs: "lo"
+    controllerAs: "lo",
+    data: {
+      authorized: [ROLES.ANONYMOUS.ROL]
+    }
   })
 
   .when('/pacientes', {
-    templateUrl: '../../views/pacientes.html',
+    templateUrl: CONFIG.TEMPLATE_DIR + 'pacientes.html',
     controller: 'Pacientes',
     controllerAs: "pa",
+    data: {
+      authorized: [ROLES.ADMIN.ROL, ROLES.PATIENT.ROL, ROLES.PROFESIONAL.ROL]
+    }
   })
 
   .when('/citas_medicas', {
-    templateUrl: '../../views/citas.html',
+    templateUrl: CONFIG.TEMPLATE_DIR + 'citas.html',
     controller: 'Citas',
-    controllerAs: "ci"
+    controllerAs: "ci",
+    data: {
+      authorized: [ROLES.ADMIN.ROL, ROLES.PROFESIONAL.ROL]
+    }
   })
 
   .when('/addPaciente', {
-    templateUrl: '../../views/addPaciente.html',
+    templateUrl: CONFIG.TEMPLATE_DIR + 'addPaciente.html',
     controller: 'PacienteAdd',
-    controllerAs: "padd"
+    controllerAs: "padd",
+    data: {
+      authorized: [ROLES.ADMIN.ROL]
+    }
   })
 
   .when('/hc', {
-    templateUrl: '/views/historia_clinica.html',
+    templateUrl: CONFIG.TEMPLATE_DIR + 'historia_clinica.html',
     controller: 'HC',
-    controllerAs: "hc"
+    controllerAs: "hc",
+    data: {
+      authorized: [ROLES.PROFESIONAL.ROL]
+    }
   })
 
   .when('/profesionales', {
-    templateUrl: '/views/profesionales.html',
+    templateUrl: CONFIG.TEMPLATE_DIR + 'profesionales.html',
     controller: 'Profesionales',
-    controllerAs: "pro"
+    controllerAs: "pro",
+    data: {
+      authorized: [ROLES.ADMIN.ROL]
+    }
   })
 
   .when('/addProfesional', {
-    templateUrl: '/views/addProfesional.html',
+    templateUrl: CONFIG.TEMPLATE_DIR + 'addProfesional.html',
     controller: 'ProfesionalAdd',
-    controllerAs: "proAdd"
+    controllerAs: "proAdd",
+    data: {
+      authorized: [ROLES.ADMIN.ROL, ROLES.PROFESIONAL.ROL]
+    }
   })
 
   .when('/admin', {
-    templateUrl: '/views/administracion.html',
+    templateUrl: CONFIG.TEMPLATE_DIR + 'administracion.html',
     controller: 'Admin',
-    controllerAs: "ad"
+    controllerAs: "ad",
+    data: {
+      authorized: [ROLES.ADMIN.ROL]
+    }
   })
 
   .otherwise({
