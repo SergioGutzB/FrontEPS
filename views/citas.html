@@ -37,12 +37,12 @@
 
         <md-input-container class="md-block" flex-gt-sm>
           <label>Profesional</label>
-          <md-select name="profesional" ng-model="ci.cita.profesional" required>
+          <md-select name="doctor_id" ng-model="ci.cita.doctor_id" required>
             <md-option ng-repeat="pro in ci.profesionals" ng-value="pro.id">{{pro.user.name}} {{pro.user.last_name}}</md-option>
           </md-select>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm layout-align="end center">
-          <md-checkbox ng-model="ci.cita.valoracion" aria-label="Checkbox 1">
+          <md-checkbox ng-model="ci.cita.valuation" aria-label="Checkbox 1">
             Valoración
           </md-checkbox>
         </md-input-container>
@@ -51,15 +51,19 @@
 
         <md-input-container class="md-block" flex-gt-sm>
           <label>Fecha de Cita</label>
-          <md-datepicker ng-model="ci.cita.startsAt" md-placeholder="Enter date"></md-datepicker>
+          <md-datepicker ng-model="ci.cita.date_cite" md-placeholder="Enter date"></md-datepicker>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
-          <label>Hora Fnicio</label>
-          <input mdc-datetime-picker="Hora inicio" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.cita.startsAt" class=" md-input">
+          <label>Hora Inicio</label>
+          <input mdc-datetime-picker="Hora inicio" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.cita.date_cite" class=" md-input">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Fecha de Cita</label>
+          <md-datepicker ng-model="ci.cita.end_cite" md-placeholder="Enter date"></md-datepicker>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
           <label>Hora Fin</label>
-          <input mdc-datetime-picker="Hora fin" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.cita.endsAt" class=" md-input">
+          <input mdc-datetime-picker="Hora fin" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.cita.end_cite" class=" md-input">
         </md-input-container>
       </div>
 

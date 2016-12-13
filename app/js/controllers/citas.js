@@ -15,18 +15,21 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
     eps.getCites()
       .then(function(response) {
         console.log("citas...");
-        console.log(response);
+        console.log(response.data.cites);
         console.log(self.patient.id);
         self.cites = response.data.cites.filter(function(cite) {
           return cite.patient.id === self.patient.id;
         });
-        console.log(self.cites);
         self.cites = self.cites.map(function(cite) {
+          if (cite.valuation) {
+            var title = "Valoración";
+            var color = calendarConfig.colorTypes.warning;
+          }
           return $.extend(cite, {
-            title: 'valoracion',
-            color: calendarConfig.colorTypes.warning,
-            startsAt: moment(cite.date_cite),
-            endsAt: moment(cite.date_cite),
+            title: title,
+            color: color,
+            startsAt: moment(cite.date_cite).format(),
+            endsAt: moment(cite.end_cite).format(),
           });
         });
         console.log(self.cites);
@@ -128,6 +131,9 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
   self.cellIsOpen = true;
 
   self.add = function() {
+    console.log("Añdiendo cita...");
+
+    self.cita = $.extend(self.cita, { patient_id: self.patient.id, authorized: false, available: true });
     console.log(self.cita);
     eps.addCite(self.cita)
       .then(function(response) {
@@ -138,10 +144,12 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
 
   };
 
+  // self.cita.date_cite = moment().hours(3).format()
+
   $scope.$watch(function() {
-    return self.cita.startsAt;
+    return self.cita.date_cite;
   }, function() {
-    self.cita.endsAt = self.cita.startsAt;
+    self.cita.end_cite = self.cita.date_cite;
   });
 
   self.eventClicked = function(event) {
