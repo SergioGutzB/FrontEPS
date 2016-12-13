@@ -42,6 +42,14 @@ function hcController($scope, $rootScope, sData, $location, eps) {
       });
   }
 
+    eps.getHc(sData.patient.id)
+      .then(function(response){
+       self.hcs= resonse.data;
+       console.log(self.hcs);
+      }, function(error){
+        console.log(error);
+      });
+
   if (self.sData.paciente === null) {
     $location.path('/pacientes');
   }

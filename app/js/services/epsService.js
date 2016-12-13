@@ -71,6 +71,14 @@ angular
         });
         return global;
       },
+      getHc: function(id){
+        global = $http({
+          method: 'POST',
+          url: 'http://35.163.238.128:3000/api/v1/histories_patients/' + id,
+          data: data
+        });
+        return global;
+      },
       addCite: function(data) {
         global = $http({
           method: 'POST',
