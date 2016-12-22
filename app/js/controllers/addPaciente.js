@@ -33,14 +33,12 @@ function pacienteAddController($scope, $rootScope, sData, eps, $mdToast, $mdDial
         religion: "",
         companion: "",
         place_of_birth: "",
-        state: "",
         municipality: "",
         city: "",
         address: "",
         cellphone: "",
         ethnicity: "",
         education_level: "",
-        municipality: "",
         state: "",
       }
     };
@@ -111,8 +109,6 @@ function pacienteAddController($scope, $rootScope, sData, eps, $mdToast, $mdDial
       cellphone: self.patient.additional_information_user.cellphone,
       ethnicity: self.patient.additional_information_user.ethnicity,
       education_level: self.patient.additional_information_user.education_level,
-      municipality: self.patient.additional_information_user.municipality,
-      state: self.patient.additional_information_user.state,
 
     };
     if (self.patient.attendants)
@@ -133,7 +129,7 @@ function pacienteAddController($scope, $rootScope, sData, eps, $mdToast, $mdDial
           reset(form);
         }
       }, function(error) {
-        showAlert($event)
+        showAlert($event);
       });
   };
 }

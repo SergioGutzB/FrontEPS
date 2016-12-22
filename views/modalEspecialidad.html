@@ -1,0 +1,56 @@
+<md-dialog aria-label="Registro Funcionario" md-theme="eps-green" style="min-width: 600px;">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Registrar Especialidad</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="dEsp.cancel()">
+        <md-icon class="fa fa-times fa-2x" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <form name="esp" md-theme="eps-green">
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Especialidad</label>
+            <input ng-model="dEsp.eps.name" name="name" required>
+            <div ng-messages="esp.name.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+            </div>
+          </md-input-container>
+        </div>
+        <p>Ingrese los campos que se requieren en la história clinica de acuerdo a la especialidad.</p>
+        <p><strong>Nota: </strong>los nombres de los campos no deben contiener espacios, ni carácteres especiales, sólo se admite el carácter "_" para separar palabras.</p>
+        <br/>
+
+        <h2 class="md-title">Campos del Formato de Valoracion </h2>
+        <md-chips ng-model="dEsp.eps.fieldsFV" name="fieldsFV" required></md-chips>
+        <div ng-messages="esp.fieldsFV.$error">
+          <div ng-message="required">Este campo es requerido.</div>
+        </div>
+        <br/>
+
+        <h2 class="md-title">Campos del Formato de Evoluion </h2>
+        <md-chips ng-model="dEsp.eps.fieldsFE" name="fieldsFE" required></md-chips>
+        <div ng-messages="esp.fieldsFE.$error">
+          <div ng-message="required">Este campo es requerido.</div>
+        </div>
+        <br/>
+
+        <h2 class="md-title">Campos del Formato de No POS </h2>
+        <md-chips ng-model="dEsp.eps.fieldsNPOS" name="fieldsNPOS" md-require-match="true" required></md-chips>
+        <div ng-messages="esp.fieldsNPOS.$error">
+          <div ng-message="required">Este campo es requerido.</div>
+        </div>
+        <br/>
+
+
+        <md-button ng-click="dEsp.addEspecialidad()" class="md-primary md-raised md-hue-2" ng-disabled="!esp.$valid">Guardar</md-button>
+
+      </form>
+    </div>
+
+  </md-dialog-content>
+</md-dialog>

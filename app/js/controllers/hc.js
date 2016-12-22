@@ -20,7 +20,7 @@ function hcController($scope, $rootScope, sData, $location, eps) {
   }
 
   self.addHc = function() {
-    console.log("añadiendo hc")
+    console.log("añadiendo hc");
     self.hc = $.extend(self.hc, { user: self.sData.patient.id });
     self.hc.valuation_format = JSON.stringify(self.hc.valuation_format);
     self.hc.evolution_format = JSON.stringify(self.hc.evolution_format);
@@ -33,22 +33,22 @@ function hcController($scope, $rootScope, sData, $location, eps) {
     if (!self.hc.format_not_pos)
       self.hc.format_not_pos = '{}';
 
-    console.log(self.hc)
+    console.log(self.hc);
     eps.addHc(self.hc)
       .then(function(response) {
         console.log(response);
       }, function(error) {
         console.log(error);
       });
-  }
+  };
 
-    eps.getHc(sData.patient.id)
-      .then(function(response){
-       self.hcs= resonse.data;
-       console.log(self.hcs);
-      }, function(error){
-        console.log(error);
-      });
+  eps.getHc(sData.patient.id)
+    .then(function(response) {
+      self.hcs = response.data.histories;
+      console.log(self.hcs);
+    }, function(error) {
+      console.log(error);
+    });
 
   if (self.sData.paciente === null) {
     $location.path('/pacientes');

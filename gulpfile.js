@@ -15,6 +15,15 @@ gulp.task('concatServices', function() {
     .pipe(gulp.dest('app/js/build/'))
 });
 
+gulp.task('concatDirectives', function() {
+  gulp.src('app/js/directives/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .pipe(concat('directives.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('app/js/build/'))
+});
+
 gulp.task('concatControllers', function() {
   gulp.src('app/js/controllers/*.js')
     .pipe(jshint())
@@ -36,8 +45,9 @@ gulp.task('sass', function() {
 });
 
 
-gulp.task('default', ['sass', 'concatServices', 'concatControllers'], function() {
+gulp.task('default', ['sass', 'concatServices', 'concatDirectives', 'concatControllers'], function() {
   gulp.watch('app/scss/*.scss', ['sass']);
   gulp.watch('app/js/services/*.js', ['concatServices']);
+  gulp.watch('app/js/directives/*.js', ['concatDirectives']);
   gulp.watch('app/js/controllers/*.js', ['concatControllers']);
 })

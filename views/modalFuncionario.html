@@ -1,0 +1,61 @@
+<md-dialog aria-label="Registro Funcionario" md-theme="eps-green" style="min-width: 600px;">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Registrar Funcionario</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="dFun.cancel()">
+        <md-icon class="fa fa-times fa-2x" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <form name="funccionario" md-theme="eps-green" novalidate>
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>E-mail</label>
+            <input ng-model="dFun.funcionario.email" name="email" type="email" required>
+            <div ng-messages="funccionario.email.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+              <div ng-message="email">No es un e-mail válido.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Documento</label>
+            <input ng-model="dFun.funcionario.document" name="document" maxlength="11" minlength="7" required>
+            <div ng-messages="funccionario.document.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+              <div ng-message="minlength">El documento debe ser mínimo de 7 dígitos.</div>
+              <div ng-message="maxlength">El documento debe ser máximo de 11 dígitos.</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Contraseña</label>
+            <input id='pw1' ng-model="dFun.funcionario.password" name="password" minlength="6" maxlength="12" type="password" ng-required required>
+            <div ng-messages="funccionario.password.$error">
+              <div ng-message="required">Este campo es requerido.</div>
+              <div ng-message="minlength">La contraseña debe contener mínimo 6 dígitos.</div>
+              <div ng-message="maxlength">La contraseña debe contener máximo 11 dígitos.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Confirmar Contraseña</label>
+            <input id='pw2' ng-model="dFun.funcionario.password_confirmation" minlength="6" name="password_confirmation" type="password" pw-check="pw1" ng-required>
+            <div ng-messages="funccionario.password_confirmation.$error">
+              <div ng-message="pwmatch">Las contraseñas no coinciden</div>
+            </div>
+          </md-input-container>
+        </div>
+        <div layout-gt-xs="row" layout-aling="center center">
+          <md-button type="submit" ng-click="dFun.save()" class="md-primary md-raised md-hue-2" ng-disabled="!funccionario.$valid">Guardar</md-button>
+        </div>
+
+      </form>
+
+    </div>
+  </md-dialog-content>
+</md-dialog>

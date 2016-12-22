@@ -71,11 +71,10 @@ angular
         });
         return global;
       },
-      getHc: function(id){
+      getHc: function(id) {
         global = $http({
-          method: 'POST',
-          url: 'http://35.163.238.128:3000/api/v1/histories_patients/' + id,
-          data: data
+          method: 'GET',
+          url: 'http://35.163.238.128:3000/api/v1/histories_patients/' + id
         });
         return global;
       },
@@ -91,6 +90,21 @@ angular
         global = $http({
           method: 'GET',
           url: 'http://35.163.238.128:3000/api/v1/cites'
+        });
+        return global;
+      },
+      getServices: function() {
+        global = $http({
+          method: 'GET',
+          url: 'http://35.163.238.128:3000/api/v1/services'
+        });
+        return global;
+      },
+      addServices: function(data) {
+        global = $http({
+          method: 'POST',
+          url: 'http://35.163.238.128:3000/api/v1/services',
+          data: data
         });
         return global;
       },

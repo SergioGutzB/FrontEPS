@@ -177,6 +177,13 @@
 
           <md-tab label="Resumen">
             <md-content class="md-padding">
+              <md-list flex>
+                <md-item class="md-3-line" ng-repeat="hc in hc.hcs">
+                  <h4>{{hc.created_at}}</h4>
+                  <h4>Diagnostico: {{hc.evolution_format.diagnostico}}</h4>
+
+                </md-item>
+              </md-list>
 
             </md-content>
           </md-tab>

@@ -5,8 +5,8 @@
       <h1>{{pageTitle}}</h1>
     </div>
 
-    <div>
-      <form name="esp" md-theme="eps-green">
+    <div layout="row">
+      <!--<form name="esp" md-theme="eps-green">
 
         <div layout-gt-xs="row">
           <md-input-container class="md-block" flex-gt-xs>
@@ -20,8 +20,49 @@
         <div layout-gt-xs="row">
           <md-button ng-click="ad.addEspecialidad()" class="md-primary md-raised md-hue-2">Guardar</md-button>
         </div>
-      </form>
+      </form>-->
 
+      <div flex layout-margin>
+        <div class="title">
+          <h3>Funcionarios</h3>
+        </div>
+        <div class="text-right" flex>
+          <md-button class="md-icon-button" aria-label="Añadir paciente" ng-click="ad.showModalFuncionario($event)">
+            <md-icon class="fa fa-plus-circle fa-2x"></md-icon>
+            <md-tooltip md-direction="top">Nuevo Funcionario</md-tooltip>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="Historia Médica" ng-click="" disabled>
+            <md-icon class="fa fa-minus-circle fa-2x"></md-icon>
+            <md-tooltip md-direction="top">Eliminar Funcionario</md-tooltip>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="Editar paciente" ng-click="" ng-disabled="true">
+            <md-icon class="fa fa-pencil fa-2x"></md-icon>
+            <md-tooltip md-direction="top">Editar Funcionario</md-tooltip>
+          </md-button>
+        </div>
+        <div ui-grid="ad.gridUserOptions" ui-grid-selection ui-grid-cellNav class="grid-admin"></div>
+      </div>
+
+      <div flex layout-margin>
+        <div class="title">
+          <h3>Especialidades</h3>
+        </div>
+        <div class="text-right" flex>
+          <md-button class="md-icon-button" aria-label="Añadir paciente" ng-click="ad.showModalEspecialidad($event)">
+            <md-icon class="fa fa-plus-circle fa-2x"></md-icon>
+            <md-tooltip md-direction="top">Nueva Especialidad</md-tooltip>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="Historia Médica" ng-click="" disabled>
+            <md-icon class="fa fa-minus-circle fa-2x"></md-icon>
+            <md-tooltip md-direction="top">Eliminar Especialidad</md-tooltip>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="Editar paciente" ng-click="" ng-disabled="true">
+            <md-icon class="fa fa-pencil fa-2x"></md-icon>
+            <md-tooltip md-direction="top">Editar Especialidad</md-tooltip>
+          </md-button>
+        </div>
+        <div ui-grid="ad.gridEspOptions" ui-grid-selection ui-grid-cellNav class="grid-admin"></div>
+      </div>
     </div>
   </div>
 </div>

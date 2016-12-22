@@ -120,7 +120,7 @@ function pacientesController($scope, $rootScope, $interval, uiGridConstants, $lo
       self.gridOptions.data = res.data.users.filter(function(user) {
         return user.type === 'Patient';
       });
-      console.log(self.gridOptions.data)
+      console.log(self.gridOptions.data);
     });
 
   $interval(function() {

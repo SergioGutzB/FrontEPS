@@ -21,9 +21,10 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
           return cite.patient.id === self.patient.id;
         });
         self.cites = self.cites.map(function(cite) {
+          var title, color;
           if (cite.valuation) {
-            var title = "Valoración";
-            var color = calendarConfig.colorTypes.warning;
+            title = "Valoración";
+            color = calendarConfig.colorTypes.warning;
           }
           return $.extend(cite, {
             title: title,
@@ -37,16 +38,12 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
         console.log(error);
         self.cites = {};
       });
-  }
+  };
 
   if (self.sData.patient !== null) {
     self.patient = self.sData.patient;
     load_cites();
   }
-
-
-
-
 
   $scope.$watch(function() {
     return self.cita.speciality;
@@ -56,7 +53,7 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
         self.profesionals = response.data.doctors.filter(function(doctor) {
           return doctor.speciality === self.cita.speciality;
         });
-      })
+      });
   });
 
   self.openToast = function($event) {
@@ -132,7 +129,8 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
 
   self.add = function() {
     console.log("Añdiendo cita...");
-
+    self.cita.date_cite = moment(self.cita.date_cite).format("YYYY-MM-DD HH:mm");
+    self.cita.end_cite = moment(self.cita.end_cite).format("YYYY-MM-DD HH:mm");
     self.cita = $.extend(self.cita, { patient_id: self.patient.id, authorized: false, available: true });
     console.log(self.cita);
     eps.addCite(self.cita)
@@ -140,7 +138,7 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
         load_cites();
         self.openToast("Cita médica guardada con éxito");
         self.cita = {};
-      }, function(error) {})
+      }, function(error) {});
 
   };
 
@@ -149,7 +147,13 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
   $scope.$watch(function() {
     return self.cita.date_cite;
   }, function() {
-    self.cita.end_cite = self.cita.date_cite;
+    var date = moment(self.cita.end_cite).format("YYYY-MM-DD HH:mm");
+    if (self.cita.valuation)
+      date = moment(date).add(20, "m");
+    else
+      date = moment(date).add(30, "m");
+    self.cita.end_cite = date;
+
   });
 
   self.eventClicked = function(event) {
@@ -176,7 +180,6 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
   };
 
   self.timespanClicked = function(date, cell) {
-
     if (self.calendarView === 'month') {
       if ((self.cellIsOpen && moment(date).startOf('day').isSame(moment(self.viewDate).startOf('day'))) || cell.events.length === 0 || !cell.inMonth) {
         self.cellIsOpen = false;

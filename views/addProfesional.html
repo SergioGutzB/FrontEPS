@@ -84,9 +84,7 @@
           <md-input-container class="md-block" flex-gt-xs>
             <label>Especialidad</label>
             <md-select name="speciality" ng-model="proAdd.profesional.speciality" required>
-              <md-option value="psicologo">Psicología</md-option>
-              <md-option value="fonoaudiologo">Fono-Audiología</md-option>
-              <md-option value="terapeuta_ocupacional">Terapia ocupacional</md-option>
+              <md-option ng-repeat="eps in proAdd.especialidades" value="eps.name" >{{eps.name}}</md-option>
             </md-select>
           </md-input-container>
 

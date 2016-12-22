@@ -9,11 +9,16 @@ function profesionalAddController($scope, $rootScope, sData, eps, $mdToast, $mdD
   $rootScope.pageTitle = 'Registrar Profesional';
   $rootScope.pageIcon = 'fa-user-md';
 
-  self.dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
-  self.searchTerm;
+  self.dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  self.searchTerm = '';
   self.clearSearchTerm = function() {
     self.searchTerm = '';
   };
+  self.especialidades = {};
+  eps.getServices()
+      .then(function(response) {
+        self.especialidades = response.data.services;
+      });
 
   var showSimpleToast = function() {
     $mdToast.show(
@@ -75,13 +80,12 @@ function profesionalAddController($scope, $rootScope, sData, eps, $mdToast, $mdD
 
     eps.addProfesional(profesional)
       .then(function(response) {
-        console.log(response);
         showSimpleToast();
         reset(form);
         $location.path('/profesionales');
       }, function(error) {
         console.log(error);
-        showAlert($event)
+        showAlert($event);
       });
   };
 }

@@ -55,26 +55,26 @@ function loginController($rootScope, $location, $auth, CONFIG, ROLES, eps) {
             var user = response.data;
             $rootScope.user = user;
             $rootScope.sesion = user.type;
-            if (user.type == null) {
+            if (user.type === null) {
               $location.path('/citas_medicas');
               CONFIG.ROL_CURRENT_USER = 3;
             }
-            if (user.type == "Functionary") {
+            if (user.type === "Functionary") {
               $location.path('/citas_medicas');
               CONFIG.ROL_CURRENT_USER = 4;
             }
-            if (user.type == "Patient") {
+            if (user.type === "Patient") {
               $location.path('/citas_medicas');
               CONFIG.ROL_CURRENT_USER = 2;
             }
-            if (user.type == "Admin") {
+            if (user.type === "Admin") {
               $location.path('/');
               CONFIG.ROL_CURRENT_USER = 1;
             }
           })
           .catch(function(error) {
 
-          })
+          });
       })
       .catch(function(resp) {
         console.log("No logeado");

@@ -57,11 +57,11 @@
           <label>Hora Inicio</label>
           <input mdc-datetime-picker="Hora inicio" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.cita.date_cite" class=" md-input">
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container class="md-block" flex-gt-sm ng-hide="true">
           <label>Fecha de Cita</label>
-          <md-datepicker ng-model="ci.cita.end_cite" md-placeholder="Enter date"></md-datepicker>
+          <md-datepicker ng-model="ci.cita.end_cite" md-placeholder="Enter date" ng-hide="true"></md-datepicker>
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container class="md-block" flex-gt-sm></md-input-container>
           <label>Hora Fin</label>
           <input mdc-datetime-picker="Hora fin" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.cita.end_cite" class=" md-input">
         </md-input-container>
