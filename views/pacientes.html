@@ -22,25 +22,21 @@
           </md-input-container>
         </div>
         <div class="text-right" flex>
-          <md-button class="md-icon-button" aria-label="Añadir paciente" ng-click="pa.go('citas_medicas')">
+          <md-button ng-if="sesion=='Functionary'" class="md-icon-button" aria-label="Añadir paciente" ng-click="pa.go('citas_medicas')">
             <md-icon class="fa fa-calendar-plus-o fa-2x"></md-icon>
-            <md-tooltip md-direction="top">Nueva Cita</md-tooltip>
+            <md-tooltip md-direction="top">Ver o crear citas</md-tooltip>
           </md-button>
 
-          <md-button class="md-icon-button" aria-label="Añadir paciente" ng-click="pa.goAdd()">
+          <md-button ng-if="sesion=='Functionary'" class="md-icon-button" aria-label="Añadir paciente" ng-click="pa.goAdd()">
             <md-icon class="fa fa-user-plus fa-2x"></md-icon>
             <md-tooltip md-direction="top">Registrar nuevo paciente</md-tooltip>
           </md-button>
 
-          <!--<md-button class="md-icon-button" aria-label="Ver Paciente" ng-click="pa.showAdvanced($event)">
-            <md-icon class="fa fa-eye fa-2x"></md-icon>
-            <md-tooltip md-direction="top">Ver datos del paciente</md-tooltip>
-          </md-button>-->
-          <md-button class="md-icon-button" aria-label="Historia Médica" ng-click="pa.go('hc')">
+          <md-button ng-if="sesion=='Doctor'" class="md-icon-button" aria-label="Historia Médica" ng-click="pa.go('hc')">
             <md-icon class="fa fa-address-card fa-2x"></md-icon>
-            <md-tooltip md-direction="top">Ver história clínica</md-tooltip>
+            <md-tooltip md-direction="top">Ver história clínica </md-tooltip>
           </md-button>
-          <md-button class="md-icon-button" aria-label="Editar paciente" ng-click="pa.go('addPaciente')">
+          <md-button ng-if="sesion=='Functionary'" class="md-icon-button" aria-label="Editar paciente" ng-click="pa.go('addPaciente')">
             <md-icon class="fa fa-pencil fa-2x"></md-icon>
             <md-tooltip md-direction="top">Editar datos del paciente</md-tooltip>
           </md-button>

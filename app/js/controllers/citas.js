@@ -1,8 +1,8 @@
 var eps = angular.module('Eps');
 eps.controller('Citas', CitasController);
-CitasController.$inject = ['$mdToast', '$auth', 'moment', '$rootScope', 'alert', 'calendarConfig', '$scope', '$window', '$ocLazyLoad', 'sData', 'eps'];
+CitasController.$inject = ['$mdToast', '$auth', 'moment', '$rootScope', 'alert', 'calendarConfig', '$scope', '$window', '$ocLazyLoad', 'sData', 'eps', '$filter'];
 
-function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarConfig, $scope, $window, $ocLazyLoad, sData, eps) {
+function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarConfig, $scope, $window, $ocLazyLoad, sData, eps, $filter) {
   var self = this;
 
   self.sData = sData;
@@ -11,39 +11,122 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
   $rootScope.pageTitle = 'Citas Médicas';
   $rootScope.pageIcon = 'fa-calendar';
 
-  var load_cites = function() {
+  self.date_cite = new Date();
+  self.end_cite = null;
+
+  self.especialidades = {};
+  eps.getServices()
+    .then(function(response) {
+      self.especialidades = response.data.services;
+      // console.log(self.especialidades);
+    });
+
+  self.liberar = function() {
+    self.patient = null;
+    self.sData.patient = null;
+    load_cites();
+  };
+
+  function load_cites_doctors() {
     eps.getCites()
       .then(function(response) {
-        console.log("citas...");
-        console.log(response.data.cites);
-        console.log(self.patient.id);
-        self.cites = response.data.cites.filter(function(cite) {
-          return cite.patient.id === self.patient.id;
-        });
+          // console.log("citas doctor...", $rootScope.user.doctor_id);
+          // console.log(response.data.cites);
+          self.cites = response.data.cites;
+          self.cites = self.cites.filter(function(cite) {
+            return cite.doctor.id === $rootScope.user.doctor_id;
+          });
+        },
+        function(error) {
+          console.log(error);
+          self.cites = {};
+          return;
+        })
+      .then(function(response) {
         self.cites = self.cites.map(function(cite) {
-          var title, color;
+          var title, color, valuation;
           if (cite.valuation) {
-            title = "Valoración";
-            color = calendarConfig.colorTypes.warning;
+            title = "Valoración - Paciente: " + cite.patient.name + " " + cite.patient.last_name;
+            color = {
+              primary: "#3F51B5",
+              secondary: "#C5CAE9"
+            };
+          } else {
+            title = "Evolución - Paciente: " + cite.patient.name + " " + cite.patient.last_name;
+            color = {
+              primary: "#00BCD4",
+              secondary: "#B2EBF2"
+            };
           }
           return $.extend(cite, {
             title: title,
             color: color,
-            startsAt: moment(cite.date_cite).format(),
-            endsAt: moment(cite.end_cite).format(),
+            startsAt: moment(cite.date_cite)._d,
+            endsAt: moment(cite.end_cite)._d,
           });
         });
-        console.log(self.cites);
+        // console.log(self.cites);
+      });
+  }
+  var load_cites = function() {
+    eps.getCites()
+      .then(function(response) {
+        // console.log("citas 2...");
+        // console.log(response.data.cites);
+        if (self.patient) {
+          // console.log(self.patient.id);
+          self.cites = response.data.cites.filter(function(cite) {
+            return cite.patient.id === self.patient.id;
+          });
+        } else
+          self.cites = response.data.cites;
       }, function(error) {
         console.log(error);
         self.cites = {};
+        return;
+      })
+      .then(function(response) {
+        self.cites = self.cites.map(function(cite) {
+          var title, color, valuation;
+          if (cite.valuation) {
+            title = "Valoración - ";
+            color = {
+              primary: "#3F51B5",
+              secondary: "#C5CAE9"
+            };
+          } else {
+            title = "Evolución";
+            color = {
+              primary: "#00BCD4",
+              secondary: "#B2EBF2"
+            };
+          }
+          var patient = cite.patient.name + " " + cite.patient.last_name;
+          var speciality = cite.doctor.speciality;
+
+          return $.extend(cite, {
+            title: title,
+            color: color,
+            startsAt: moment(cite.date_cite)._d,
+            endsAt: moment(cite.end_cite)._d,
+          });
+        });
+        // console.log(self.cites);
       });
   };
-
-  if (self.sData.patient !== null) {
-    self.patient = self.sData.patient;
-    load_cites();
-  }
+  $rootScope.$watch('user', function() {
+    if (self.sData.patient !== null) {
+      // console.log("hay paciente");
+      self.patient = self.sData.patient;
+      load_cites();
+    } else if ($rootScope.sesion === "Doctor") {
+      // console.log("hay doctor");
+      load_cites_doctors();
+    } else {
+      // console.log("no hay NADA");
+      load_cites();
+    }
+  });
 
   $scope.$watch(function() {
     return self.cita.speciality;
@@ -56,10 +139,14 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
       });
   });
 
-  self.openToast = function($event) {
-    $mdToast.show($mdToast.simple().textContent('Hello!'));
-    // Could also do $mdToast.showSimple('Hello');
-  };
+  function showSimpleToast(text) {
+    $mdToast.show(
+      $mdToast.simple()
+      .textContent(text)
+      .position("top right")
+      .hideDelay(6000)
+    );
+  }
   //These variables MUST be set as a minimum for the calendar to work
   self.calendarView = 'week';
   self.viewDate = new Date();
@@ -98,62 +185,38 @@ function CitasController($mdToast, $auth, moment, $rootScope, alert, calendarCon
       alert.show('Deleted', args.calendarEvent);
     }
   }];
-  // self.events = [{
-  //   title: 'Paciente 1',
-  //   color: calendarConfig.colorTypes.warning,
-  //   startsAt: moment().startOf('day').add(7, 'hours').toDate(),
-  //   endsAt: moment().startOf('day').add(7.5, 'hours').toDate(),
-  //   draggable: true,
-  //   resizable: true,
-  //   actions: actions
-  // }, {
-  //   title: 'Paciente 2',
-  //   color: calendarConfig.colorTypes.info,
-  //   startsAt: moment().startOf('day').add(7.5, 'hours').toDate(),
-  //   endsAt: moment().startOf('day').add(8, 'hours').toDate(),
-  //   draggable: true,
-  //   resizable: true,
-  //   actions: actions
-  // }, {
-  //   title: 'Paciente 3',
-  //   color: calendarConfig.colorTypes.important,
-  //   startsAt: moment().startOf('day').add(8, 'hours').toDate(),
-  //   endsAt: moment().startOf('day').add(9, 'hours').toDate(),
-  //   recursOn: 'year',
-  //   draggable: true,
-  //   resizable: true,
-  //   actions: actions
-  // }];
 
   self.cellIsOpen = true;
 
   self.add = function() {
-    console.log("Añdiendo cita...");
-    self.cita.date_cite = moment(self.cita.date_cite).format("YYYY-MM-DD HH:mm");
-    self.cita.end_cite = moment(self.cita.end_cite).format("YYYY-MM-DD HH:mm");
-    self.cita = $.extend(self.cita, { patient_id: self.patient.id, authorized: false, available: true });
-    console.log(self.cita);
+    // console.log("Añdiendo cita...");
+    self.cita = $.extend(self.cita, {
+      date_cite: moment(self.date_cite)._d,
+      end_cite: moment(self.end_cite)._d,
+      patient_id: self.patient.id,
+      authorized: false,
+      available: true
+    });
+    // console.log(self.cita);
     eps.addCite(self.cita)
       .then(function(response) {
         load_cites();
-        self.openToast("Cita médica guardada con éxito");
+        showSimpleToast("Cita médica guardada con éxito");
         self.cita = {};
       }, function(error) {});
 
   };
 
-  // self.cita.date_cite = moment().hours(3).format()
 
   $scope.$watch(function() {
-    return self.cita.date_cite;
+    return self.date_cite;
   }, function() {
-    var date = moment(self.cita.end_cite).format("YYYY-MM-DD HH:mm");
+    var date = moment($filter('date')(self.date_cite, "yyyy-MM-dd HH:mm"));
     if (self.cita.valuation)
       date = moment(date).add(20, "m");
     else
       date = moment(date).add(30, "m");
-    self.cita.end_cite = date;
-
+    self.end_cite = date._d;
   });
 
   self.eventClicked = function(event) {

@@ -1,0 +1,126 @@
+<md-dialog aria-label="Registro Funcionario" md-theme="eps-green" style="min-width: 90%;">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Historia Clínica - {{dHC.hc.format}}</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="dHC.cancel()">
+        <md-icon class="fa fa-times fa-2x" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <div>
+        <h4>PS: {{dHC.hc.especialista}} ({{dHC.hc.especialidad}}) T.P:{{dHC.hc.tp}}</h4>
+        <h4>Registrada: {{dHC.hc.fecha}}</h4>
+      </div>
+      <br>
+      <div ng-if="dHC.hc.format == 'Valoración Inicial'">
+        <md-content class="md-padding">
+
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Motivo de la Consulta</label>
+            <textarea disable ng-model="dHC.hc.motivo" md-select-on-focus></textarea>
+          </md-input-container>
+          <h3>Antecedentes Médicos</h3>
+          <div class="div-horizontal"> </div>
+          <br>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Farmacológicos</label>
+            <textarea disable ng-model="dHC.hc.farmacologicos" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Enfermedades Familiares</label>
+            <textarea disable ng-model="dHC.hc.enFamiliares" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Enfermedades Personales</label>
+            <textarea disable ng-model="dHC.hc.enPersonales" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Enfermedades Psiquiátricas</label>
+            <textarea disable ng-model="dHC.hc.enPsiquiatricas" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Medicamentos</label>
+            <textarea disable ng-model="dHC.hc.medicamentos" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Datos socio demográficos</label>
+            <textarea disable ng-model="dHC.hc.demograficos" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Hallasgos importantes</label>
+            <textarea disable ng-model="dHC.hc.hallasgos" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Evolución de psicología</label>
+            <textarea disable ng-model="dHC.hc.evPsicologica" md-select-on-focus></textarea>
+          </md-input-container>
+          <div class="div-horizontal"> </div><br>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Impresión diagnostica</label>
+            <textarea disable ng-model="dHC.hc.impresionDiagnostica" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Conducta a seguir</label>
+            <textarea disable ng-model="dHC.hc.condutaSeguir" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Pruebas</label>
+            <textarea disable ng-model="dHC.hc.pruebas" md-select-on-focus></textarea>
+          </md-input-container>
+          <div class="div-horizontal"> </div><br>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Diagnostico</label>
+            <textarea disable ng-model="dHC.hc.diagnostico" md-select-on-focus></textarea>
+          </md-input-container>
+
+          <!--<div layout-gt-xs="row">
+                  <md-button type="submit" class="md-primary md-raised md-hue-2">Guardar</md-button>
+                </div>-->
+
+        </md-content>
+      </div>
+      <div ng-if="dHC.hc.format == 'Evolución'">
+        <md-content class="md-padding">
+
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Objetivo</label>
+            <textarea disable ng-model="dHC.hc.objetivo" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Desarrollo de de la sesión</label>
+            <textarea disable ng-model="dHC.hc.sesion" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Evolución del paciente</label>
+            <textarea disable ng-model="dHC.hc.evolucion" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Conducta a seguir</label>
+            <textarea disable ng-model="dHC.hc.condutaSeguir" md-select-on-focus></textarea>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Diagnostico principal</label>
+            <textarea disable ng-model="dHC.hc.diagnostico" md-select-on-focus></textarea>
+          </md-input-container>
+
+
+        </md-content>
+      </div>
+      <div ng-if="dHC.hc.format == 'No POS'">
+        <md-content class="md-padding">
+
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Procedimientos</label>
+            <textarea disable ng-model="dHC.hc.procedimientos" md-select-on-focus></textarea>
+          </md-input-container>
+
+        </md-content>
+      </div>
+    </div>
+
+  </md-dialog-content>
+</md-dialog>

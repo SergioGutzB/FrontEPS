@@ -16,9 +16,11 @@ function profesionalAddController($scope, $rootScope, sData, eps, $mdToast, $mdD
   };
   self.especialidades = {};
   eps.getServices()
-      .then(function(response) {
-        self.especialidades = response.data.services;
-      });
+    .then(function(response) {
+      self.especialidades = response.data.services;
+      // console.log(self.especialidades);
+    });
+
 
   var showSimpleToast = function() {
     $mdToast.show(

@@ -93,6 +93,13 @@ angular
         });
         return global;
       },
+      getCitesEspecialista: function(id) {
+        global = $http({
+          method: 'GET',
+          url: 'http://35.163.238.128:3000/api/v1/cites_doctors/' + id
+        });
+        return global;
+      },
       getServices: function() {
         global = $http({
           method: 'GET',

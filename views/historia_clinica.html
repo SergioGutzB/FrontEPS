@@ -12,43 +12,34 @@
               <div layout-gt-xs="row">
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>Nombres</label>
-                  <input ng-model="hc.patient.name" name="name" required>
-                  <div ng-messages="pacienteAdd.name.$error">
-                    <div ng-message="required">Este campo es requerido.</div>
-                  </div>
+                  <input ng-model="hc.patient.name" name="name" disabled>
                 </md-input-container>
 
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>Apellidos</label>
-                  <input ng-model="hc.patient.last_name" name="last_name" required>
-                  <div ng-messages="pacienteAdd.last_name.$error">
-                    <div ng-message="required">Este campo es requerido.</div>
-                  </div>
+                  <input ng-model="hc.patient.last_name" name="last_name" disabled>
                 </md-input-container>
 
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>E-mail</label>
-                  <input ng-model="hc.patient.email" name="email" type="email" required>
-                  <div ng-messages="pacienteAdd.email.$error">
-                    <div ng-message="required">Este campo es requerido.</div>
-                  </div>
+                  <input ng-model="hc.patient.email" name="email" type="email" disabled>
                 </md-input-container>
               </div>
 
               <div layout-gt-xs="row">
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>Documento</label>
-                  <input ng-model="hc.patient.document" required>
+                  <input ng-model="hc.patient.document" disabled>
                 </md-input-container>
 
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>Cumpleaños</label>
-                  <md-datepicker ng-model="hc.patient.birthdate" value="{{hc.patient.birthdate}}" required></md-datepicker>
+                  <md-datepicker ng-model="hc.patient.birthdate" value="{{hc.patient.birthdate}}" disabled></md-datepicker>
                 </md-input-container>
 
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>Estado civil</label>
-                  <md-select name="civil_status" ng-model="hc.patient.additional_information_user.civil_status" required>
+                  <md-select name="civil_status" ng-model="hc.patient.additional_information_user.civil_status" disabled>
                     <md-option value="casado">Casado/a</md-option>
                     <md-option value="comprometido">Comprometido/a</md-option>
                     <md-option value="soltero">Soltero/a</md-option>
@@ -60,7 +51,7 @@
 
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>Sexo</label>
-                  <md-select name="gender" ng-model="hc.patient.gender" required>
+                  <md-select name="gender" ng-model="hc.patient.gender" disabled>
                     <md-option value="F">Femenino</md-option>
                     <md-option value="M">Masculino</md-option>
                   </md-select>
@@ -177,14 +168,14 @@
 
           <md-tab label="Resumen">
             <md-content class="md-padding">
-              <md-list flex>
-                <md-item class="md-3-line" ng-repeat="hc in hc.hcs">
-                  <h4>{{hc.created_at}}</h4>
-                  <h4>Diagnostico: {{hc.evolution_format.diagnostico}}</h4>
-
-                </md-item>
-              </md-list>
-
+              <div layout-gt-sm="row">
+                <div flex></div>
+                <md-button class="md-icon-button" aria-label="Historia Médica" ng-click="hc.showModalHC()">
+                  <md-icon class="fa fa-address-card fa-2x"></md-icon>
+                  <md-tooltip md-direction="top">Ver história</md-tooltip>
+                </md-button>
+              </div>
+              <div ui-grid="hc.gridHCOptions" ui-grid-selection class="grid"></div>
             </md-content>
           </md-tab>
         </md-tabs>

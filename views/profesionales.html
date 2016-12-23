@@ -21,7 +21,7 @@
             <input ng-model="pro.filterValue">
           </md-input-container>
         </div>
-        <div class="text-right" flex>
+        <div class="text-right" flex ng-if="sesion == 'Functionary'">
           <md-button class="md-icon-button" aria-label="Añadir paciente" ng-click="pro.goAdd()">
             <md-icon class="fa fa-user-plus fa-2x"></md-icon>
             <md-tooltip md-direction="top">Registrar Profesional</md-tooltip>

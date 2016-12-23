@@ -83,20 +83,20 @@ function adminController($scope, $rootScope, sData, $location, eps, $interval, u
   function loadEpscialidades() {
     eps.getServices()
       .then(function(response) {
-        console.log(response.data);
+        // console.log(response.data);
         self.gridEspOptions.data = response.data.services;
-        console.log(self.gridEspOptions.data);
+        // console.log(self.gridEspOptions.data);
       });
   }
 
   function loadFuncionarios() {
     eps.getUsers()
       .then(function(response) {
-        console.log(response.data);
+        // console.log(response.data);
         self.gridUserOptions.data = response.data.users.filter(function(user) {
           return user.type === 'Functionary';
         });
-        console.log(self.gridUserOptions.data);
+        // console.log(self.gridUserOptions.data);
       });
   }
 
@@ -156,10 +156,10 @@ function adminController($scope, $rootScope, sData, $location, eps, $interval, u
     };
 
     self.addEspecialidad = function() {
-      console.log(self.eps);
+      // console.log(self.eps);
       eps.addServices(self.eps)
         .then(function(response) {
-          console.log(response);
+          // console.log(response);
           loadEpscialidades();
           self.hide();
           showSimpleToast("Especialidad Registrada!");
@@ -211,7 +211,7 @@ function adminController($scope, $rootScope, sData, $location, eps, $interval, u
       if (self.funcionario) {
         var funcionario = self.funcionario;
         $.extend(funcionario, { type: 'functionary' });
-        console.log(funcionario);
+        // console.log(funcionario);
         eps.addProfesional(funcionario)
           .then(function(response) {
             self.hide();

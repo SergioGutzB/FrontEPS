@@ -27,12 +27,12 @@ function profesionalesController($scope, $rootScope, $interval, uiGridConstants,
       self.gridApi.grid.registerRowsProcessor(self.singleFilter, 200);
     },
     columnDefs: [
-      { field: 'name' },
-      { field: 'last_name' },
-      { field: 'document' },
-      { field: 'birthdate' },
-      { field: 'speciality' },
-      { field: 'consultorio' },
+      { field: 'name', displayName: 'Nombres' },
+      { field: 'last_name', displayName: 'Apellidos' },
+      { field: 'document', displayName: 'Documento' },
+      { field: 'phone', displayName: 'Teléfono' },
+      { field: 'speciality', displayName: 'Epecialidad' },
+      { field: 'medical_license', displayName: 'T.P.' },
     ]
   };
 
@@ -59,7 +59,7 @@ function profesionalesController($scope, $rootScope, $interval, uiGridConstants,
     var matcher = new RegExp(self.filterValue);
     renderableRows.forEach(function(row) {
       var match = false;
-      ['name', 'last_name', 'document', 'speciality'].forEach(function(field) {
+      ['name', 'last_name', 'document', 'speciality', 'medical_license'].forEach(function(field) {
         if (row.entity[field].match(matcher)) {
           match = true;
         }
@@ -90,21 +90,22 @@ function profesionalesController($scope, $rootScope, $interval, uiGridConstants,
   };
 
   eps.getProfesionales()
-    .then(function(res) {
-      console.log(res);
+    .then(function(response) {
+      // console.log(response);
+      self.gridOptions.data = response.data.doctors.map(function(doctor) {
+        return {
+          name: doctor.user.name,
+          last_name: doctor.user.last_name,
+          document: doctor.user.document,
+          phone: doctor.user.phone,
+          medical_license: doctor.medical_license,
+          speciality: doctor.speciality,
+        };
+      });
     }, function(error) {
       console.log("error..");
       console.log(error);
     });
-
-  eps.getProfesional(1)
-    .then(function(response) {
-      console.log(response);
-    }, function(error) {
-      console.log(error);
-    });
-
-  self.gridOptions.data = self.sData.profesionales;
 
   $interval(function() {
     self.gridApi.selection.selectRow(self.gridOptions.data[0]);

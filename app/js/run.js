@@ -12,47 +12,60 @@ angular
     $rootScope.signOut = function() {
       $auth.signOut()
         .then(function(resp) {
-          console.log("signOut");
+          // console.log("signOut");
           CONFIG.ROL_CURRENT_USER = 0;
           $location.path('/login');
+          $rootScope.user = null;
+          $rootScope.sesion = null;
         })
         .catch(function(resp) {
-          console.log("No signOut")
+          // console.log("No signOut")
         });
     };
-
-    $auth.validateUser()
-      .then(function(response) {
-        console.log("hay usuario..");
-        console.log(response);
-        var id = response.id;
-        eps.getUser(id)
-          .then(function(response) {
-            var user = response.data;
-            $rootScope.user = user;
-            $rootScope.sesion = user.type;
-            if (user.type == null) {
-              CONFIG.ROL_CURRENT_USER = 3;
-            }
-            if (user.type == "Functionary") {
-              CONFIG.ROL_CURRENT_USER = 4;
-            }
-            if (user.type == "Patient") {
-              CONFIG.ROL_CURRENT_USER = 2;
-            }
-            if (user.type == "Admin") {
-              CONFIG.ROL_CURRENT_USER = 1;
-            }
-          })
-          .catch(function(error) {
-
-          })
-      })
-      .catch(function(response) {
-        CONFIG.ROL_CURRENT_USER = 0;
-        $rootScope.sesion = null;
-        $location.path('/login');
-      })
+    $rootScope.validate = function() {
+      $auth.validateUser()
+        .then(function(response) {
+          // console.log("hay usuario..");
+          // console.log(response);
+          var user = response;
+          var id = response.id;
+          eps.getUser(id)
+            .then(function(response) {
+              user = $.extend(user, response.data);
+              // console.log("user: ", user);
+              if (user.doctor_id)
+                eps.getProfesional(user.doctor_id)
+                .then(function(response) {
+                  user = $.extend(user, response.data);
+                })
+              $rootScope.user = user;
+              $rootScope.sesion = user.type;
+              if (user.type == null) {
+                CONFIG.ROL_CURRENT_USER = 3;
+                $rootScope.sesion = 'Doctor';
+                $location.path('/citas_medicas');
+              }
+              if (user.type == "Functionary") {
+                CONFIG.ROL_CURRENT_USER = 4;
+                $location.path('/citas_medicas');
+              }
+              if (user.type == "Patient") {
+                CONFIG.ROL_CURRENT_USER = 2;
+                $location.path('/citas_medicas');
+              }
+              if (user.type == "Admin") {
+                CONFIG.ROL_CURRENT_USER = 1;
+                $location.path('/admin');
+              }
+            })
+        })
+        .catch(function(response) {
+          CONFIG.ROL_CURRENT_USER = 0;
+          $rootScope.sesion = null;
+          $location.path('/login');
+        })
+    }
+    $rootScope.validate();
 
     // $rootScope.$on('$routeChangeStart', function(event, next) {
     //   if (next.data !== undefined) {

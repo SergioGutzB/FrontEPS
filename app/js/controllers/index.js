@@ -6,7 +6,7 @@ function indexController($rootScope, $location, $auth) {
 
   var self = this;
   self.close = function() {
-    console.log("close");
+    // console.log("close");
   };
 
 

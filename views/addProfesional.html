@@ -84,7 +84,7 @@
           <md-input-container class="md-block" flex-gt-xs>
             <label>Especialidad</label>
             <md-select name="speciality" ng-model="proAdd.profesional.speciality" required>
-              <md-option ng-repeat="eps in proAdd.especialidades" value="eps.name" >{{eps.name}}</md-option>
+              <md-option ng-repeat="eps in proAdd.especialidades" value="{{eps.name}}">{{eps.name}}</md-option>
             </md-select>
           </md-input-container>
 

@@ -31,13 +31,14 @@ eps.config(function($mdThemingProvider) {
 eps.config(['calendarConfig', function(calendarConfig) {
   calendarConfig.dateFormatter = 'moment'; // use moment to format dates
   calendarConfig.allDateFormats.moment.date.hour = 'HH:mm';
+  calendarConfig.colorTypes.warning;
 }]);
 
 eps.config(function($authProvider) {
   $authProvider.configure({
     apiUrl: 'http://35.163.238.128:3000/api/v1',
     handleLoginResponse: function(response) {
-      console.log(response);
+      // console.log(response);
       return response;
     },
   });

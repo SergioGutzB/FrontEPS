@@ -5,10 +5,7 @@ pacientesController.$inject = ['$scope', '$rootScope', '$interval', 'uiGridConst
 function pacientesController($scope, $rootScope, $interval, uiGridConstants, $location, $mdDialog, sData, eps) {
   var self = this;
   self.sData = sData;
-  $rootScope.pageTitle = 'Pacientes';
   $rootScope.pageIcon = 'fa-users';
-
-
 
   self.showAdvanced = function(ev) {
     if (self.getCurrentSelection())
@@ -46,12 +43,12 @@ function pacientesController($scope, $rootScope, $interval, uiGridConstants, $lo
       self.gridApi.grid.registerRowsProcessor(self.singleFilter, 200);
     },
     columnDefs: [
-      { field: 'id' },
-      { field: 'name' },
-      { field: 'last_name' },
-      { field: 'document' },
-      { field: 'birthdate' },
-      { field: 'phone' }
+      { field: 'id', displayName: 'ID' },
+      { field: 'name', displayName: 'Nombres' },
+      { field: 'last_name', displayName: 'Apellidos' },
+      { field: 'document', displayName: 'Documento' },
+      { field: 'birthdate', displayName: 'Fecha nacimiento' },
+      { field: 'phone', displayName: 'Teléfono' }
     ]
   };
 
@@ -64,8 +61,8 @@ function pacientesController($scope, $rootScope, $interval, uiGridConstants, $lo
 
   self.getCurrentSelection = function() {
     self.sData.patient = self.gridApi.selection.getSelectedRows()[0];
-    console.log("selecionado");
-    console.log(self.sData.patient);
+    // console.log("selecionado");
+    // console.log(self.sData.patient);
     if (self.sData.patient !== undefined)
       return true;
     else return false;
@@ -109,19 +106,47 @@ function pacientesController($scope, $rootScope, $interval, uiGridConstants, $lo
     self.sData.patient = null;
     $location.path('/addPaciente');
   };
-
-  eps.getUser(2)
-    .then(function(res) {
-      console.log("usuario id:");
-      console.log(res);
-    });
+  var data;
   eps.getUsers()
     .then(function(res) {
-      self.gridOptions.data = res.data.users.filter(function(user) {
-        return user.type === 'Patient';
-      });
-      console.log(self.gridOptions.data);
+      // console.log("res user ", res.data.users);
+
+      if ($rootScope.sesion === 'Functionary') {
+        data = res.data.users.filter(function(user) {
+          return user.type === 'Patient';
+        });
+        $rootScope.pageTitle = 'Pacientes';
+        // console.log('gridOptions: ', data);
+        if (data)
+          self.gridOptions.data = data.map(function(patient) {
+            patient.birthdate = moment(patient.birthdate).format('L');
+            return patient;
+          });
+      } else if ($rootScope.sesion === 'Doctor') {
+        $rootScope.pageTitle = 'Pacientes Asignados';
+        eps.getCites()
+          .then(function(response) {
+            // console.log("cites: ", response.data.cites);
+            var patient = response.data.cites.filter(function(cite) {
+              return cite.doctor.id === $rootScope.user.doctor_id;
+            });
+            // console.log("patient: ", patient);
+            data = patient.map(function(cite) {
+              return cite.patient;
+            });
+            // console.log('gridOptions: ', data);
+            if (data)
+              self.gridOptions.data = data.map(function(patient) {
+                patient.birthdate = moment(patient.birthdate).format('L');
+                return patient;
+              });
+
+          });
+      }
+
+
     });
+
 
   $interval(function() {
     self.gridApi.selection.selectRow(self.gridOptions.data[0]);

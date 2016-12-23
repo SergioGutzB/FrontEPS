@@ -1,8 +1,14 @@
 <div class="contenido">
   <div layout="column" class="pasientes" md-theme="eps-green">
     <div flex class="titulo" layout="row">
-      <i class="fa fa-calendar-plus-o fa-3x" aria-hidden="true"> </i>
-      <h1>Nueva Cíta</h1>
+      <i class="fa {{pageIcon}} fa-3x" aria-hidden="true"> </i>
+      <h1>{{pageTitle}}</h1>
+      <div flex></div>
+
+      <md-button class="md-icon-button" aria-label="Editar paciente" ng-click="ci.liberar()">
+        <md-icon class="fa fa-refresh fa-2x"></md-icon>
+        <md-tooltip md-direction="top">Liberar paciente</md-tooltip>
+      </md-button>
     </div>
     <div ng-if="ci.patient">
       <br/>
@@ -29,9 +35,7 @@
         <md-input-container class="md-block" flex-gt-sm>
           <label>Especialidad</label>
           <md-select name="speciality" ng-model="ci.cita.speciality" required>
-            <md-option value="psicologo">Psicología</md-option>
-            <md-option value="fonoaudiologo">Fono-Audiología</md-option>
-            <md-option value="terapeuta_ocupacional">Terapia ocupacional</md-option>
+            <md-option ng-repeat="eps in ci.especialidades" value="{{eps.name}}">{{eps.name}}</md-option>
           </md-select>
         </md-input-container>
 
@@ -51,19 +55,19 @@
 
         <md-input-container class="md-block" flex-gt-sm>
           <label>Fecha de Cita</label>
-          <md-datepicker ng-model="ci.cita.date_cite" md-placeholder="Enter date"></md-datepicker>
+          <md-datepicker ng-model="ci.date_cite" md-placeholder="Enter date"></md-datepicker>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
           <label>Hora Inicio</label>
-          <input mdc-datetime-picker="Hora inicio" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.cita.date_cite" class=" md-input">
+          <input mdc-datetime-picker="Hora inicio" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.date_cite" class=" md-input">
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm ng-hide="true">
           <label>Fecha de Cita</label>
-          <md-datepicker ng-model="ci.cita.end_cite" md-placeholder="Enter date" ng-hide="true"></md-datepicker>
+          <md-datepicker ng-model="ci.end_cite" md-placeholder="Enter date" ng-hide="true"></md-datepicker>
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm></md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
           <label>Hora Fin</label>
-          <input mdc-datetime-picker="Hora fin" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.cita.end_cite" class=" md-input">
+          <input mdc-datetime-picker="Hora fin" date="false" time="true" type="text" id="time" short-time="true" placeholder="Time" min-date="minDate" format="hh:mm a" ng-model="ci.end_cite" class=" md-input">
         </md-input-container>
       </div>
 
@@ -75,9 +79,10 @@
     <br/>
     <div class="div-horizontal"> </div>
 
-    <h3>Estado de la Agenda</h3>
+    <h3>Estado de la Agenda <span>- Paciente: {{ci.patient.name}} {{ci.patient.last_name}}</span></h3>
     <br />
     <!--<h2 class="text-center">{{ ci.calendarTitle }}</h2>-->
+    <h2 class="text-center">{{ ci.calendarTitle }}</h2>
     <div layout-gt-sm="row">
       <div flex-gt-sm layout="row" layout-align="start center">
         <md-button class="md-primary" mwl-date-modifier date="ci.viewDate" decrement="ci.calendarView" ng-click="ci.cellIsOpen = false">
@@ -100,8 +105,8 @@
 
     <br>
 
-    <mwl-calendar events="ci.cites" view="ci.calendarView" view-title="ci.calendarTitle" view-date="ci.viewDate" on-event-click="ci.eventClicked(calendarEvent)" on-event-times-changed="ci.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-      cell-is-open="ci.cellIsOpen" day-view-start="07:00" day-view-end="17:00" day-view-split="30" cell-modifier="ci.modifyCell(calendarCell)" cell-auto-open-disabled="true" on-timespan-click="ci.timespanClicked(calendarDate, calendarCell)">
+    <mwl-calendar events="ci.cites" view="ci.calendarView" view-title="ci.calendarTitle" view-date="ci.viewDate" on-event-times-changed="ci.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+       day-view-start="05:00" day-view-end="21:00" day-view-split="30" cell-modifier="ci.modifyCell(calendarCell)" on-timespan-click="ci.timespanClicked(calendarDate, calendarCell)">
     </mwl-calendar>
 
 

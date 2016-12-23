@@ -47,10 +47,10 @@ function pacienteAddController($scope, $rootScope, sData, eps, $mdToast, $mdDial
   reset();
 
   if (self.sData.patient !== null) {
-    console.log(self.sData.patient.id);
+    // console.log(self.sData.patient.id);
     eps.getUser(self.sData.patient.id)
       .then(function(response) {
-        console.log(response.data);
+        // console.log(response.data);
         self.patient = response.data;
       }, function(error) {
         self.patient = self.sData.patient;
@@ -94,22 +94,22 @@ function pacienteAddController($scope, $rootScope, sData, eps, $mdToast, $mdDial
       gender: self.patient.gender,
       birthdate: self.patient.birthdate,
       phone: self.patient.phone,
-
-      blood_type: self.patient.additional_information_user.blood_type,
-      civil_status: self.patient.additional_information_user.civil_status,
-      occupation: self.patient.additional_information_user.occupation,
-      live_with: self.patient.additional_information_user.live_with,
-      religion: self.patient.additional_information_user.religion,
-      companion: self.patient.additional_information_user.companion,
-      place_of_birth: self.patient.additional_information_user.place_of_birth,
-      state: self.patient.additional_information_user.state,
-      municipality: self.patient.additional_information_user.municipality,
-      city: self.patient.additional_information_user.city,
-      address: self.patient.additional_information_user.address,
-      cellphone: self.patient.additional_information_user.cellphone,
-      ethnicity: self.patient.additional_information_user.ethnicity,
-      education_level: self.patient.additional_information_user.education_level,
-
+      aditional_information: {
+        blood_type: self.patient.additional_information_user.blood_type,
+        civil_status: self.patient.additional_information_user.civil_status,
+        occupation: self.patient.additional_information_user.occupation,
+        live_with: self.patient.additional_information_user.live_with,
+        religion: self.patient.additional_information_user.religion,
+        companion: self.patient.additional_information_user.companion,
+        place_of_birth: self.patient.additional_information_user.place_of_birth,
+        state: self.patient.additional_information_user.state,
+        municipality: self.patient.additional_information_user.municipality,
+        city: self.patient.additional_information_user.city,
+        address: self.patient.additional_information_user.address,
+        cellphone: self.patient.additional_information_user.cellphone,
+        ethnicity: self.patient.additional_information_user.ethnicity,
+        education_level: self.patient.additional_information_user.education_level,
+      }
     };
     if (self.patient.attendants)
       var attendants = {
