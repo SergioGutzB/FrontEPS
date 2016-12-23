@@ -8,8 +8,9 @@ function hcController($scope, $rootScope, sData, $location, eps, $interval, uiGr
 
   $rootScope.pageTitle = 'Historia Clínica';
   $rootScope.pageIcon = 'fa-address-card';
-
+  self.hc = {};
   self.hc_id = null;
+  self.newHC = false;
 
   if (self.sData.patient !== null) {
     eps.getUser(self.sData.patient.id)
@@ -21,6 +22,32 @@ function hcController($scope, $rootScope, sData, $location, eps, $interval, uiGr
         self.patient = self.sData.patient;
       });
   }
+
+  $scope.$watch(function() {
+    return self.hc.valuation_format;
+  }, function(){
+     if(Object.size(self.hc.valuation_format) > 0 || Object.size(self.hc.evolution_format) > 0 || Object.size(self.hc.format_not_pos) > 0){
+      self.newHC = true;
+    }
+  });
+
+  $scope.$watch(function() {
+    return self.hc.format_not_pos;
+  }, function(){
+     if(Object.size(self.hc.format_not_pos) > 0){
+      self.newHC = true;
+    }
+  });
+
+  $scope.$watch(function() {
+    return self.hc.evolution_format;
+  }, function(){
+     if(Object.size(self.hc.evolution_format) > 0){
+      self.newHC = true;
+    }
+  });
+
+
 
   function showSimpleToast(text) {
     $mdToast.show(
@@ -57,12 +84,13 @@ function hcController($scope, $rootScope, sData, $location, eps, $interval, uiGr
       self.hc.format_not_pos = JSON.stringify($.extend(self.hc.format_not_pos, aditional));
     }
 
-    console.log(self.hc);
+    // console.log(self.hc);
     eps.addHc(self.hc)
       .then(function(response) {
-        console.log(response);
+        // console.log(response);
         showSimpleToast("Historia Clínica Actulizada!");
         loadHCs();
+        self.newHC = false;
       }, function(error) {
         console.log(error);
       });

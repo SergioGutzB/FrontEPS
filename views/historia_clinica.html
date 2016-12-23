@@ -14,29 +14,24 @@
                   <label>Nombres</label>
                   <input ng-model="hc.patient.name" name="name" disabled>
                 </md-input-container>
-
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>Apellidos</label>
                   <input ng-model="hc.patient.last_name" name="last_name" disabled>
                 </md-input-container>
-
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>E-mail</label>
                   <input ng-model="hc.patient.email" name="email" type="email" disabled>
                 </md-input-container>
               </div>
-
               <div layout-gt-xs="row">
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>Documento</label>
                   <input ng-model="hc.patient.document" disabled>
                 </md-input-container>
-
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>Cumpleaños</label>
                   <md-datepicker ng-model="hc.patient.birthdate" value="{{hc.patient.birthdate}}" disabled></md-datepicker>
                 </md-input-container>
-
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>Estado civil</label>
                   <md-select name="civil_status" ng-model="hc.patient.additional_information_user.civil_status" disabled>
@@ -46,9 +41,7 @@
                     <md-option value="divorciado">Divorciado/a</md-option>
                     <md-option value="viudo">Viudo/a</md-option>
                   </md-select>
-
                 </md-input-container>
-
                 <md-input-container class="md-block" flex-gt-xs>
                   <label>Sexo</label>
                   <md-select name="gender" ng-model="hc.patient.gender" disabled>
@@ -57,115 +50,110 @@
                   </md-select>
                 </md-input-container>
               </div>
-
             </md-content>
           </md-tab>
-
-          <md-tab label="Formato Valoración">
-            <md-content class="md-padding">
-
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Motivo de la Consulta</label>
-                <textarea ng-model="hc.hc.valuation_format.motivo" md-select-on-focus></textarea>
-              </md-input-container>
-              <h3>Antecedentes Médicos</h3>
-              <div class="div-horizontal"> </div>
-              <br>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Farmacológicos</label>
-                <textarea ng-model="hc.hc.valuation_format.farmacologicos" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Enfermedades Familiares</label>
-                <textarea ng-model="hc.hc.valuation_format.enFamiliares" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Enfermedades Personales</label>
-                <textarea ng-model="hc.hc.valuation_format.enPersonales" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Enfermedades Psiquiátricas</label>
-                <textarea ng-model="hc.hc.valuation_format.enPsiquiatricas" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Medicamentos</label>
-                <textarea ng-model="hc.hc.valuation_format.medicamentos" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Datos socio demográficos</label>
-                <textarea ng-model="hc.hc.valuation_format.demograficos" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Hallasgos importantes</label>
-                <textarea ng-model="hc.hc.valuation_format.hallasgos" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Evolución de psicología</label>
-                <textarea ng-model="hc.hc.valuation_format.evPsicologica" md-select-on-focus></textarea>
-              </md-input-container>
-              <div class="div-horizontal"> </div><br>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Impresión diagnostica</label>
-                <textarea ng-model="hc.hc.valuation_format.impresionDiagnostica" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Conducta a seguir</label>
-                <textarea ng-model="hc.hc.valuation_format.condutaSeguir" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Pruebas</label>
-                <textarea ng-model="hc.hc.valuation_format.pruebas" md-select-on-focus></textarea>
-              </md-input-container>
-              <div class="div-horizontal"> </div><br>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Diagnostico</label>
-                <textarea ng-model="hc.hc.valuation_format.diagnostico" md-select-on-focus></textarea>
-              </md-input-container>
-
-              <!--<div layout-gt-xs="row">
-                  <md-button type="submit" class="md-primary md-raised md-hue-2">Guardar</md-button>
-                </div>-->
-
-            </md-content>
+          <md-tab label="Formatos">
+            <md-tabs md-dynamic-height md-border-bottom>
+              <md-tab label="Formatos">
+                <md-content class="md-padding">
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Motivo de la Consulta</label>
+                    <textarea ng-model="hc.hc.valuation_format.motivo" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <h3>Antecedentes Médicos</h3>
+                  <div class="div-horizontal"> </div>
+                  <br>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Farmacológicos</label>
+                    <textarea ng-model="hc.hc.valuation_format.farmacologicos" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Enfermedades Familiares</label>
+                    <textarea ng-model="hc.hc.valuation_format.enFamiliares" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Enfermedades Personales</label>
+                    <textarea ng-model="hc.hc.valuation_format.enPersonales" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Enfermedades Psiquiátricas</label>
+                    <textarea ng-model="hc.hc.valuation_format.enPsiquiatricas" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Medicamentos</label>
+                    <textarea ng-model="hc.hc.valuation_format.medicamentos" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Datos socio demográficos</label>
+                    <textarea ng-model="hc.hc.valuation_format.demograficos" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Hallasgos importantes</label>
+                    <textarea ng-model="hc.hc.valuation_format.hallasgos" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Evolución de psicología</label>
+                    <textarea ng-model="hc.hc.valuation_format.evPsicologica" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <div class="div-horizontal"> </div><br>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Impresión diagnostica</label>
+                    <textarea ng-model="hc.hc.valuation_format.impresionDiagnostica" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Conducta a seguir</label>
+                    <textarea ng-model="hc.hc.valuation_format.condutaSeguir" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Pruebas</label>
+                    <textarea ng-model="hc.hc.valuation_format.pruebas" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <div class="div-horizontal"> </div><br>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Diagnostico</label>
+                    <textarea ng-model="hc.hc.valuation_format.diagnostico" md-select-on-focus></textarea>
+                  </md-input-container>
+                </md-content>
+              </md-tab>
+              <md-tab label="Formato Evolución">
+                <md-content class="md-padding">
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Objetivo</label>
+                    <textarea ng-model="hc.hc.evolution_format.objetivo" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Desarrollo de de la sesión</label>
+                    <textarea ng-model="hc.hc.evolution_format.sesion" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Evolución del paciente</label>
+                    <textarea ng-model="hc.hc.evolution_format.evolucion" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Conducta a seguir</label>
+                    <textarea ng-model="hc.hc.evolution_format.condutaSeguir" md-select-on-focus></textarea>
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Diagnostico principal</label>
+                    <textarea ng-model="hc.hc.evolution_format.diagnostico" md-select-on-focus></textarea>
+                  </md-input-container>
+                </md-content>
+              </md-tab>
+              <md-tab label="Formato no POS">
+                <md-content class="md-padding">
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Procedimientos</label>
+                    <textarea ng-model="hc.hc.format_not_pos.procedimientos" md-select-on-focus></textarea>
+                  </md-input-container>
+                </md-content>
+              </md-tab>
+            </md-tabs>
+            <div layout-gt-xs="row">
+              <md-content class="md-padding">
+                <md-button type="submit" ng-click="hc.addHc()" ng-disabled="!hc.newHC" class="md-primary md-raised md-hue-2">Guardar</md-button>
+              </md-content>
+            </div>
           </md-tab>
-          <md-tab label="Formato Evolución">
-            <md-content class="md-padding">
-
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Objetivo</label>
-                <textarea ng-model="hc.hc.evolution_format.objetivo" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Desarrollo de de la sesión</label>
-                <textarea ng-model="hc.hc.evolution_format.sesion" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Evolución del paciente</label>
-                <textarea ng-model="hc.hc.evolution_format.evolucion" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Conducta a seguir</label>
-                <textarea ng-model="hc.hc.evolution_format.condutaSeguir" md-select-on-focus></textarea>
-              </md-input-container>
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Diagnostico principal</label>
-                <textarea ng-model="hc.hc.evolution_format.diagnostico" md-select-on-focus></textarea>
-              </md-input-container>
-
-
-            </md-content>
-          </md-tab>
-          <md-tab label="Formato no POS">
-            <md-content class="md-padding">
-
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Procedimientos</label>
-                <textarea ng-model="hc.hc.format_not_pos.procedimientos" md-select-on-focus></textarea>
-              </md-input-container>
-
-            </md-content>
-          </md-tab>
-
           <md-tab label="Resumen">
             <md-content class="md-padding">
               <div layout-gt-sm="row">
@@ -179,9 +167,6 @@
             </md-content>
           </md-tab>
         </md-tabs>
-        <div layout-gt-xs="row">
-          <md-button type="submit" ng-click="hc.addHc()" class="md-primary md-raised md-hue-2">Guardar</md-button>
-        </div>
       </md-content>
     </div>
   </div>
